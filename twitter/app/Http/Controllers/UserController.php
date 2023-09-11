@@ -10,14 +10,16 @@ use Illuminate\Contracts\View\View;
 class UserController extends Controller
 {
     /**
-     * マイページの表示
-     *
+     * ユーザーIDに基づいてユーザーを検索し、ユーザー情報を表示するビューを返す。
+     * 
+     * @param int $id ユーザーID
      * @return View
      *
      */
-    public function findByUserId($id): View
+    public function findByUserId(int $id): View
     {
-        $user = User::find($id);
+        $userModel = new User();
+        $user = $userModel->findByUserId($id);
 
         return view('user.show', compact('user'));
     }
