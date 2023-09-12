@@ -55,4 +55,19 @@ class UserController extends Controller
 
         return redirect()->route('user.show', $userId)->with('success', '更新しました');
     }
+
+    /**
+     * ユーザーを削除する
+     * 
+     * @param int $userId ユーザーID
+     * @return RedirectResponse
+     * 
+     */
+    public function delete(int $userId): RedirectResponse
+    {
+        $user = User::find($userId);
+        $user->deleteUser();
+
+        return redirect()->route('home');
+    }
 }
