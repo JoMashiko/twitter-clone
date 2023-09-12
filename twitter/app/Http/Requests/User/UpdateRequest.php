@@ -44,7 +44,7 @@ class UpdateRequest extends FormRequest
                 'max:20',
                 Rule::unique('users')->ignore($userId),
             ],
-            'bio_text' => ['string', 'max:255']
+            'bio_text' => ['max:255']
         ];
     }
 }
