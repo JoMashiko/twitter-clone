@@ -73,18 +73,13 @@ class User extends Authenticatable
     /**
      * ユーザー情報を更新する
      * 
-     * @param Request $request
+     * @param array $userParam 
+     * @param int $id
      */
-    public function updateUser(Request $request,int $id): void
+    public function updateUser(array $userParam,int $id): void
     {
         $user = $this->findByUserId($id);
-
-        $user->display_name = $request->display_name;
-        $user->email = $request->email;
-        $user->birthday = $request->birthday;
-        $user->user_name =  $request->user_name;
-        $user->bio_text = $request->bio_text;
-        
+        $user->fill($userParam);
         $user->save();
     }
 }

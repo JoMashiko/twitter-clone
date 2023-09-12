@@ -5,9 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Contracts\View\View;
-use App\Http\Requests\UserRequest;
+use App\Http\Requests\User\UpdateRequest;
 use Illuminate\Http\RedirectResponse;
-
 
 class UserController extends Controller
 {
@@ -46,10 +45,12 @@ class UserController extends Controller
      * @return RedirectResponse
      * 
      */
-    public function update(UserRequest $request, int $id): RedirectResponse
+    public function update(UpdateRequest $request, int $id): RedirectResponse
     {   
         $user = new User();
-        $user->updateUser($request,$id);
+        // バリデーション済みデータの取得
+        $userParam = $request->validated();
+        $user->updateUser($userParam, $id);
 
         return redirect()->route('user.show', $id)->with('success', '更新しました');
     }

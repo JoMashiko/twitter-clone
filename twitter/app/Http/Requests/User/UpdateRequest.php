@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\User;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 
-class UserRequest extends FormRequest
+class UpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -33,6 +33,7 @@ class UserRequest extends FormRequest
                 'string',
                 'email',
                 'max:255',
+                'email:filter,dns',
                 # 自身のデータを無視する
                 Rule::unique('users')->ignore($userId),
             ],
@@ -43,6 +44,7 @@ class UserRequest extends FormRequest
                 'max:20',
                 Rule::unique('users')->ignore($userId),
             ],
+            'bio_text' => ['string', 'max:255']
         ];
     }
 }
