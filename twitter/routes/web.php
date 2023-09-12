@@ -32,4 +32,4 @@ Route::prefix('user/{id}')->group(function() {
     Route::put('/update', [UserController::class, 'update'])->name('user.update');
     // ユーザー削除
     Route::delete('/',[UserController::class, 'delete'])->name('user.delete');
-});
+});// ユーザー一覧Route::get('/users', [UserController::class, 'getAll'])->name('user.index');
