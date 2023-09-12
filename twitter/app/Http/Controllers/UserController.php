@@ -48,11 +48,28 @@ class UserController extends Controller
      */
     public function update(UpdateRequest $request, int $userId): RedirectResponse
     {   
-        $user = User::find($userId);
+        $userModel = new User();
+        $user = $userModel->findByUserId($userId);
         // バリデーション済みデータの取得
         $userParam = $request->validated();
         $user->updateUser($userParam, $user);
 
         return redirect()->route('user.show', $userId)->with('success', '更新しました');
+    }
+
+    /**
+     * ユーザーを削除する
+     * 
+     * @param int $userId ユーザーID
+     * @return RedirectResponse
+     * 
+     */
+    public function delete(int $userId): RedirectResponse
+    {
+        $userModel = new User();
+        $user = $userModel->findByUserId($userId);
+        $user->deleteUser();
+
+        return redirect()->route('home');
     }
 }
