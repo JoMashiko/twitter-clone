@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\Collection;
 
 class User extends Authenticatable
 {
@@ -88,5 +89,17 @@ class User extends Authenticatable
     public function deleteUser(): void
     {
         $this->delete();
+    }
+
+    /**
+     * すべてのユーザーを取得する
+     * 
+     * @return Collection
+     */
+    public function getAllUser(): Collection
+    {
+        $users = User::all();
+
+        return $users;
     }
 }
