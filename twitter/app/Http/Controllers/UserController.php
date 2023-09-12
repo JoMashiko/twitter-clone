@@ -72,4 +72,18 @@ class UserController extends Controller
 
         return redirect()->route('home');
     }
+
+    /**
+     * ユーザー一覧を表示するビューを返す
+     * 
+     * @return View
+     * 
+     */
+    public function getAll(): View
+    {
+        $userModel= new User();
+        $users = $userModel->getAllUser();
+
+        return view('user.index', compact('users'));
+    }
 }
