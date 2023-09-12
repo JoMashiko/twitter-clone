@@ -13,14 +13,14 @@ class UserController extends Controller
     /**
      * ユーザーIDに基づいてユーザーを検索し、ユーザー情報を表示するビューを返す。
      * 
-     * @param int $id ユーザーID
+     * @param int $userId ユーザーID
      * @return View
      *
      */
-    public function findByUserId(int $id): View
+    public function findByUserId(int $userId): View
     {
         $userModel = new User();
-        $user = $userModel->findByUserId($id);
+        $user = $userModel->findByUserId($userId);
 
         return view('user.show', compact('user'));
     }
@@ -42,16 +42,17 @@ class UserController extends Controller
      * 更新内容を受け取り、ユーザー情報を更新する
      * 
      * @param  UserRequest  $request
+     * @param  int $userId ユーザーID
      * @return RedirectResponse
      * 
      */
-    public function update(UpdateRequest $request, int $id): RedirectResponse
+    public function update(UpdateRequest $request, int $userId): RedirectResponse
     {   
-        $user = new User();
+        $user = User::find($userId);
         // バリデーション済みデータの取得
         $userParam = $request->validated();
-        $user->updateUser($userParam, $id);
+        $user->updateUser($userParam, $user);
 
-        return redirect()->route('user.show', $id)->with('success', '更新しました');
+        return redirect()->route('user.show', $userId)->with('success', '更新しました');
     }
 }
