@@ -81,4 +81,12 @@ class User extends Authenticatable
         $user->fill($userParam);
         $user->save();
     }
+
+    /**
+     * ユーザーを削除する
+     */
+    public function deleteUser(): void
+    {
+        $this->delete();
+    }
 }
