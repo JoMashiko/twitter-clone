@@ -23,16 +23,21 @@
                     <p>{{ __('誕生日: ') . $user->birthday }}</p>
                     <p>{{ __('ユーザーネーム: ') . $user->user_name }}</p>
                     <p>{{ __('自己紹介: ') . $user->bio_text }}</p>
-                    <div class="row mb-0">
-                        <div class="col-md-6">
-                            <a href="{{ route('user.edit', $user) }}" class="btn btn-primary">
-                                {{ __('編集') }}
-                            </a>
-                        </div>
-                    </div>                    
-                    </form>
+                        
+                    <div class="d-flex">
+                        <button type="button" class="btn btn-dark" onclick="location.href='{{ route('user.edit', $user) }}'">
+                            {{ __('編集') }}
+                        </button>
+                        <form method='post' action={{ route('user.delete', $user) }} onsubmit="
+                        return confirm('本当にアカウントを削除してもよろしいですか？');">
+                            @csrf
+                            @method('delete')
+                            <button type="submit" class="btn btn-danger mx-2">
+                                {{ __('削除') }}
+                            </button>
+                        </form>
+                    </div>
                 </div>
-
             </div>
         </div>
     </div>
