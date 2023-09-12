@@ -22,7 +22,15 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-// ユーザー詳細
-Route::get('/user/{id}', [App\Http\Controllers\UserController::class,'findByUserId'])->name('findByUserId');
+# マイページ
+Route::prefix('user/{id}')->group(function() {
+    // ユーザー詳細画面の表示
+    Route::get('/', [UserController::class, 'findByUserId'])->name('user.show');
+    // ユーザー編集画面の表示
+    Route::get('/edit', [UserController::class, 'edit'])->name('user.edit');
+    // ユーザー情報更新
+    Route::put('/update', [UserController::class, 'update'])->name('user.update');
+});
+
 
 

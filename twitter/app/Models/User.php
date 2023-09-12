@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class User extends Authenticatable
 {
@@ -50,6 +52,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function getAuthPassword()
+    {
+        return $this->{"hash_password"};
+    }
+
     /**
      * ユーザーIDに基づいてユーザーを検索し、一致するUserを返す。
      * 
@@ -61,10 +68,17 @@ class User extends Authenticatable
         $user = $this->find($id);
 
         return $user;
+    }
 
-    public function getAuthPassword()
+    /**
+     * ユーザー情報を更新する
+     * 
+     * @param array $userParam
+     * @param User $user
+     */
+    public function updateUser(array $userParam, User $user): void
     {
-        return $this->{"hash_password"};
-
+        $user->fill($userParam);
+        $user->save();
     }
 }
