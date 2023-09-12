@@ -30,7 +30,6 @@ Route::prefix('user/{id}')->group(function() {
     Route::get('/edit', [UserController::class, 'edit'])->name('user.edit');
     // ユーザー情報更新
     Route::put('/update', [UserController::class, 'update'])->name('user.update');
+    // ユーザー削除
+    Route::delete('/',[UserController::class, 'delete'])->name('user.delete');
 });
-
-
-
