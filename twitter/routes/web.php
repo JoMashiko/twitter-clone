@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\TweetController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 
@@ -35,4 +36,11 @@ Route::prefix('user/{id}')->group(function() {
 });
 
 // ユーザー一覧
-Route::get('/users', [UserController::class, 'getAll'])->name('user.index');// ツイートRoute::prefix('tweet')->group(function() {    // ツイート画面の表示    Route::get('/create', [TweetController:: class, 'create'])->name('tweet.create');    Route::post('/store', [TweetController:: class, 'store'])->name('tweet.store');});
+Route::get('/users', [UserController::class, 'getAll'])->name('user.index');
+
+// ツイート
+Route::prefix('tweet')->group(function() {
+    // ツイート画面の表示
+    Route::get('/create', [TweetController:: class, 'create'])->name('tweet.create');
+    Route::post('/store', [TweetController:: class, 'store'])->name('tweet.store');
+});

@@ -21,11 +21,10 @@ class UserController extends Controller
     }
 
     /**
-     * ユーザーIDに基づいてユーザーを検索し、ユーザー情報を表示するビューを返す。
+     * ユーザーIDに基づいてユーザーを検索し、ユーザー情報を表示するビューを返す
      * 
      * @param int $userId ユーザーID
      * @return View
-     *
      */
     public function findByUserId(int $userId): View
     {
@@ -35,10 +34,9 @@ class UserController extends Controller
     }
 
     /**
-     * ユーザー編集画面を表示するビューを返す
+     * ユーザー編集画面を表示するViewを返す
      * 
      * @return View
-     * 
      */
     public function edit(): View
     {
@@ -53,7 +51,6 @@ class UserController extends Controller
      * @param  UserRequest  $request
      * @param  int $userId ユーザーID
      * @return RedirectResponse
-     * 
      */
     public function update(UpdateRequest $request, int $userId): RedirectResponse
     {   
@@ -70,7 +67,6 @@ class UserController extends Controller
      * 
      * @param int $userId ユーザーID
      * @return RedirectResponse
-     * 
      */
     public function delete(int $userId): RedirectResponse
     {
@@ -81,10 +77,9 @@ class UserController extends Controller
     }
 
     /**
-     * ユーザー一覧を表示するビューを返す
+     * ユーザー一覧を表示するViewを返す
      * 
      * @return View
-     * 
      */
     public function getAll(): View
     {
