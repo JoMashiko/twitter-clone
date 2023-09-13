@@ -11,6 +11,16 @@ use Illuminate\Http\RedirectResponse;
 class UserController extends Controller
 {
     /**
+     * コンストラクタ
+     */
+    private $userModel;
+
+    public function __construct(User $userModel)
+    {
+        $this->userModel = $userModel;
+    }
+
+    /**
      * ユーザーIDに基づいてユーザーを検索し、ユーザー情報を表示するビューを返す。
      * 
      * @param int $userId ユーザーID
@@ -19,8 +29,7 @@ class UserController extends Controller
      */
     public function findByUserId(int $userId): View
     {
-        $userModel = new User();
-        $user = $userModel->findByUserId($userId);
+        $user = $this->userModel->findByUserId($userId);
 
         return view('user.show', compact('user'));
     }
@@ -48,8 +57,7 @@ class UserController extends Controller
      */
     public function update(UpdateRequest $request, int $userId): RedirectResponse
     {   
-        $userModel = new User();
-        $user = $userModel->findByUserId($userId);
+        $user = $this->userModel->findByUserId($userId);
         // バリデーション済みデータの取得
         $userParam = $request->validated();
         $user->updateUser($userParam, $user);
@@ -66,8 +74,7 @@ class UserController extends Controller
      */
     public function delete(int $userId): RedirectResponse
     {
-        $userModel = new User();
-        $user = $userModel->findByUserId($userId);
+        $user = $this->userModel->findByUserId($userId);
         $user->deleteUser();
 
         return redirect()->route('home');
@@ -81,8 +88,7 @@ class UserController extends Controller
      */
     public function getAll(): View
     {
-        $userModel= new User();
-        $users = $userModel->getAllUser();
+        $users = $this->userModel->getAllUser();
 
         return view('user.index', compact('users'));
     }
