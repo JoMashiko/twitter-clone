@@ -31,8 +31,8 @@ Route::prefix('user/{id}')->group(function() {
     // ユーザー情報更新
     Route::put('/update', [UserController::class, 'update'])->name('user.update');
     // ユーザー削除
-    Route::delete('/',[UserController::class, 'delete'])->name('user.delete');
+    Route::delete('/', [UserController::class, 'delete'])->name('user.delete');
 });
 
 // ユーザー一覧
-Route::get('/users', [UserController::class, 'getAll'])->name('user.index');
+Route::get('/users', [UserController::class, 'getAll'])->name('user.index');// ツイートRoute::prefix('tweet')->group(function() {    // ツイート画面の表示    Route::get('/create', [TweetController:: class, 'create'])->name('tweet.create');    Route::post('/store', [TweetController:: class, 'store'])->name('tweet.store');});
