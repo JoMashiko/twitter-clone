@@ -15,7 +15,7 @@ class Tweet extends Model
     /**
      * ツイートを保存する
      * 
-     * @param array %tweetParam
+     * @param array tweetParam
      * @param int $userId
      */
     public function store(array $tweetParam, int $userId): void
