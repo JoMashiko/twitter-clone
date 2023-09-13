@@ -22,7 +22,7 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-# マイページ
+// マイページ
 Route::prefix('user/{id}')->group(function() {
     // ユーザー詳細画面の表示
     Route::get('/', [UserController::class, 'findByUserId'])->name('user.show');
@@ -33,3 +33,6 @@ Route::prefix('user/{id}')->group(function() {
     // ユーザー削除
     Route::delete('/',[UserController::class, 'delete'])->name('user.delete');
 });
+
+// ユーザー一覧
+Route::get('/users', [UserController::class, 'getAll'])->name('user.index');
