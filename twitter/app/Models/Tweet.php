@@ -33,7 +33,7 @@ class Tweet extends Model
      * 
      * @return Collection
      */
-    public function getAllTweet(): Collection
+    public function getAllTweets(): Collection
     {
         return Tweet::latest()->get();
     }

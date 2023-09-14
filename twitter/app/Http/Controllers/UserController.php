@@ -81,9 +81,9 @@ class UserController extends Controller
      * 
      * @return View
      */
-    public function getAll(): View
+    public function getAllUsers(): View
     {
-        $users = $this->userModel->getAllUser();
+        $users = $this->userModel->getAllUsers();
 
         return view('user.index', compact('users'));
     }
