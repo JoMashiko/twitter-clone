@@ -10,6 +10,7 @@ use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class User extends Authenticatable
 {
@@ -96,8 +97,18 @@ class User extends Authenticatable
      * 
      * @return Collection
      */
-    public function getAllUser(): Collection
+    public function getAllUsers(): Collection
     {
         return User::all();
+    }
+
+    /**
+     * リレーション
+     * 
+     * @return HasMany
+     */
+    public function tweets() : HasMany
+    {
+        return $this->hasMany(Tweet::class);
     }
 }

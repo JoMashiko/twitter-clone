@@ -22,7 +22,7 @@ class TweetController extends Controller
     }
 
     /**
-     * ツイート投稿画面を表示するViewを返す
+     * ツイート投稿画面を表示する
      *  
      * @return View
      */
@@ -43,9 +43,19 @@ class TweetController extends Controller
         $tweetParam = $request->validated();
         $this->tweetModel->store($tweetParam, $userId);
 
-        return redirect()->route('home')->with('success', 'ツイートされました');
+        return redirect()->route('tweet.index')->with('success', 'ツイートが保存されました');
         
     }
 
-    
+    /**
+     * ツイート一覧を表示する
+     * 
+     * @return View
+     */
+    public function getAllTweets(): View
+    {
+       $tweets = $this->tweetModel->getAllTweets();
+
+       return view('tweet.index', compact('tweets'));
+    }
 }

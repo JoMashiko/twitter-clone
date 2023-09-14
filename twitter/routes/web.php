@@ -42,5 +42,9 @@ Route::get('/users', [UserController::class, 'getAll'])->name('user.index');
 Route::prefix('tweet')->group(function() {
     // ツイート画面の表示
     Route::get('/create', [TweetController:: class, 'create'])->name('tweet.create');
+    // ツイート保存
     Route::post('/store', [TweetController:: class, 'store'])->name('tweet.store');
 });
+
+// ツイート一覧
+Route::get('/tweets', [TweetController:: class, 'getAll'])->name('tweet.index');

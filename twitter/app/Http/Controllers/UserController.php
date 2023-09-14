@@ -21,7 +21,7 @@ class UserController extends Controller
     }
 
     /**
-     * ユーザーIDに基づいてユーザーを検索し、ユーザー情報を表示するビューを返す
+     * ユーザーIDに基づいてユーザーを検索し、ユーザー情報を表示する
      * 
      * @param int $userId ユーザーID
      * @return View
@@ -34,7 +34,7 @@ class UserController extends Controller
     }
 
     /**
-     * ユーザー編集画面を表示するViewを返す
+     * ユーザー編集画面を表示する
      * 
      * @return View
      */
@@ -77,13 +77,13 @@ class UserController extends Controller
     }
 
     /**
-     * ユーザー一覧を表示するViewを返す
+     * ユーザー一覧を表示する
      * 
      * @return View
      */
-    public function getAll(): View
+    public function getAllUsers(): View
     {
-        $users = $this->userModel->getAllUser();
+        $users = $this->userModel->getAllUsers();
 
         return view('user.index', compact('users'));
     }
