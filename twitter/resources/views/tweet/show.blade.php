@@ -19,19 +19,21 @@
                     <p class="card-text">
                         {{ $tweet->body }}
                     </p>
-                    <div class="d-grid d-md-flex justify-content-md-end">
-                        <button type="button" class="btn btn-outline-dark me-md-2" onclick="location.href='{{ route('tweet.edit', $tweet) }}'">
-                            {{ __('編集') }}
-                        </button>
-                        <form method='post' action={{ route('tweet.delete', $tweet) }} onsubmit="
-                        return confirm('本当にツイートを削除してもよろしいですか？');">
-                            @csrf
-                            @method('delete')
-                            <button type="submit" class="btn btn-danger mx-2">
-                                {{ __('削除') }}
+                    @can('update', $tweet)
+                        <div class="d-grid d-md-flex justify-content-md-end">
+                            <button type="button" class="btn btn-outline-dark me-md-2" onclick="location.href='{{ route('tweet.edit', $tweet) }}'">
+                                {{ __('編集') }}
                             </button>
-                        </form>
-                      </div>
+                            <form method='post' action={{ route('tweet.delete', $tweet) }} onsubmit="
+                            return confirm('本当にツイートを削除してもよろしいですか？');">
+                                @csrf
+                                @method('delete')
+                                <button type="submit" class="btn btn-danger mx-2">
+                                    {{ __('削除') }}
+                                </button>
+                            </form>
+                        </div>
+                    @endcan
                 </div>
             </div>
         </div>
