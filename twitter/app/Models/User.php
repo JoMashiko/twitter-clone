@@ -97,7 +97,7 @@ class User extends Authenticatable
      * 
      * @return Collection
      */
-    public function getAllUser(): Collection
+    public function getAllUsers(): Collection
     {
         return User::all();
     }

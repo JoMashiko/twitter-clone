@@ -52,10 +52,10 @@ class TweetController extends Controller
      * 
      * @return View
      */
-    public function getAll(): View
+    public function getAllTweets(): View
     {
-       $tweets = $this->tweetModel->getAllTweet();
+       $tweets = $this->tweetModel->getAllTweets();
 
        return view('tweet.index', compact('tweets'));
-    }    
+    }
 }
