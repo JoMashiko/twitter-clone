@@ -69,6 +69,6 @@ class Tweet extends Model
     public function updateTweet(array $tweetParam, Tweet $tweet): void
     {
         $tweet->fill($tweetParam);
-        $tweet->save();
+        $tweet->update();
     }
 }
