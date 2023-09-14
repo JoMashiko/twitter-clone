@@ -47,5 +47,15 @@ class TweetController extends Controller
         
     }
 
-    
+    /**
+     * ツイート一覧を表示する
+     * 
+     * @return View
+     */
+    public function getAll(): View
+    {
+       $tweets = $this->tweetModel->getAll();
+
+       return view('tweet.index', compact('tweets'));
+    }    
 }
