@@ -36,7 +36,7 @@ Route::prefix('user/{id}')->group(function() {
 });
 
 // ユーザー一覧
-Route::get('/users', [UserController::class, 'getAll'])->name('user.index');
+Route::get('/users', [UserController::class, 'getAllUsers'])->name('user.index');
 
 // ツイート
 Route::prefix('tweet')->group(function() {
@@ -44,7 +44,9 @@ Route::prefix('tweet')->group(function() {
     Route::get('/create', [TweetController:: class, 'create'])->name('tweet.create');
     // ツイート保存
     Route::post('/store', [TweetController:: class, 'store'])->name('tweet.store');
+    // ツイート詳細画面の表示
+    Route::get('/{id}', [TweetController:: class, 'findByTweetId'])->name('tweet.show');
 });
 
 // ツイート一覧
-Route::get('/tweets', [TweetController:: class, 'getAll'])->name('tweet.index');
+Route::get('/tweets', [TweetController:: class, 'getAllTweets'])->name('tweet.index');

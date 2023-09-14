@@ -48,4 +48,14 @@ class Tweet extends Model
         return $this->belongsTo(User::class);
     }
 
+    /**
+     * ツイートIDに基づいてツイートを検索し、一致するツイートを返す
+     * 
+     * @param int $tweetId
+     * @return Tweet $tweet
+     */
+    public function findByTweetId(int $tweetId): Tweet
+    {
+        return Tweet::find($tweetId);
+    }
 }

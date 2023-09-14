@@ -57,5 +57,18 @@ class TweetController extends Controller
        $tweets = $this->tweetModel->getAllTweet();
 
        return view('tweet.index', compact('tweets'));
-    }    
+    }
+
+    /**
+     * ツイートIDに基づいてツイートを検索し、詳細画面を表示する
+     * 
+     * @param int $tweetId
+     * @return View
+     */
+    public function findByTweetId(int $tweetId): View
+    {
+        $tweet = $this->tweetModel->findByTweetId($tweetId);
+
+        return view('tweet.show', compact('tweet'));
+    }
 }
