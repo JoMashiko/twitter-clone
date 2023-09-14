@@ -4,14 +4,8 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            @if (session('success'))
-                <div class="alert alert-success" role="alert">
-                    {{ session('success') }}
-                </div>
-            @endif
-            @foreach($tweets as $tweet)
             <div class="card bg-white mb-3">
-                <a href="{{ route('tweet.show', $tweet->id) }}" class="card-body" style="text-decoration: none; color: inherit;">
+                <div class="card-body">
                     <h6 class="card-title">
                         {{ $tweet->user->display_name }}
                         <span class="text-muted">{{ '@' }}{{ $tweet->user->user_name }}</span>
@@ -20,9 +14,8 @@
                     <p class="card-text">
                         {{ $tweet->body }}
                     </p>
-                </a>
+                </div>
             </div>
-            @endforeach
         </div>
     </div>
 </div>
