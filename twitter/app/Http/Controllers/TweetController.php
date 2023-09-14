@@ -8,6 +8,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\Tweet\UpdateRequest;
 
 class TweetController extends Controller
 {
@@ -71,4 +72,33 @@ class TweetController extends Controller
 
         return view('tweet.show', compact('tweet'));
     }
+
+    /**
+     * ツイート編集画面を表示する
+     * 
+     * @param int $tweetId
+     * @return View
+     */
+    public function edit(int $tweetId): View
+    {
+        $tweet = $this->tweetModel->findByTweetId($tweetId);
+
+        return view('tweet.edit',compact('tweet'));
+    }
+
+    /**
+     * ツイートを更新する
+     * 
+     * @param UpdateRequest $request
+     * @param int $tweetId
+     * @return RedirectResponse
+     */
+    public function update(UpdateRequest $request, int $tweetId): RedirectResponse
+    {
+        $tweetParam = $request->validated();
+        $tweet = $this->tweetModel->findByTweetId($tweetId);
+        $tweet->updateTweet($tweetParam, $tweet);
+
+        return redirect()->route('tweet.show', $tweetId)->with('success', '更新しました');
+    } 
 }
