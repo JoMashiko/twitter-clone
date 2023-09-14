@@ -71,4 +71,12 @@ class Tweet extends Model
         $tweet->fill($tweetParam);
         $tweet->update();
     }
+
+    /**
+     * ユーザーを削除する
+     */
+    public function deleteTweet(): void
+    {
+        $this->delete();
+    }
 }

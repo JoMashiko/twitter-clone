@@ -69,7 +69,7 @@ class TweetController extends Controller
     public function findByTweetId(int $tweetId): View
     {
         $tweet = $this->tweetModel->findByTweetId($tweetId);
-
+    
         return view('tweet.show', compact('tweet'));
     }
 
@@ -100,5 +100,19 @@ class TweetController extends Controller
         $tweet->updateTweet($tweetParam, $tweet);
 
         return redirect()->route('tweet.show', $tweetId)->with('success', '更新しました');
-    } 
+    }
+
+    /**
+     * ツイートを削除する
+     * 
+     * @param int $tweetId ユーザーID
+     * @return RedirectResponse
+     */
+    public function delete(int $tweetId): RedirectResponse
+    {
+        $user = $this->tweetModel->findByTweetId($tweetId);
+        $user->deleteTweet();
+
+        return redirect()->route('tweet.index')->with('success', 'ツイートを削除しました');
+    }
 }
