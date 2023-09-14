@@ -43,7 +43,7 @@ class TweetController extends Controller
         $tweetParam = $request->validated();
         $this->tweetModel->store($tweetParam, $userId);
 
-        return redirect()->route('home')->with('success', 'ツイートされました');
+        return redirect()->route('tweet.index')->with('success', 'ツイートが保存されました');
         
     }
 
@@ -54,7 +54,7 @@ class TweetController extends Controller
      */
     public function getAll(): View
     {
-       $tweets = $this->tweetModel->getAll();
+       $tweets = $this->tweetModel->getAllTweet();
 
        return view('tweet.index', compact('tweets'));
     }    

@@ -50,6 +50,9 @@
                             @endif
                         @else
                         <li class="nav-item">    
+                            <a class="nav-link" href="{{ route('tweet.index') }}">{{ __('ホーム') }}</a>
+                        </li>
+                        <li class="nav-item">    
                             <a class="nav-link" href="{{ route('tweet.create') }}">{{ __('ツイート') }}</a>
                         </li>
                             <li class="nav-item dropdown">
