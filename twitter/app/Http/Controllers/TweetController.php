@@ -22,7 +22,7 @@ class TweetController extends Controller
     }
 
     /**
-     * ツイート投稿画面を表示するViewを返す
+     * ツイート投稿画面を表示する
      *  
      * @return View
      */
