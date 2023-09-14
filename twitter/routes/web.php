@@ -49,6 +49,12 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/store', [TweetController:: class, 'store'])->name('tweet.store');
         // ツイート詳細画面の表示
         Route::get('/{id}', [TweetController:: class, 'findByTweetId'])->name('tweet.show');
+        //　ツイート編集画面の表示
+        Route::get('/{id}/edit', [TweetController::class, 'edit'])->name('tweet.edit');
+        // ツイート内容更新
+        Route::put('/{id}/update', [TweetController::class, 'update'])->name('tweet.update');
+        // ツイート削除
+        Route::delete('/{id}/delete', [TweetController::class, 'delete'])->name('tweet.delete');
     });
 });
 
