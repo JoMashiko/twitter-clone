@@ -97,6 +97,7 @@ class TweetController extends Controller
     {
         $tweetParam = $request->validated();
         $tweet = $this->tweetModel->findByTweetId($tweetId);
+        $this->authorize('update', $tweet);
         $tweet->updateTweet($tweetParam, $tweet);
 
         return redirect()->route('tweet.show', $tweetId)->with('success', '更新しました');
