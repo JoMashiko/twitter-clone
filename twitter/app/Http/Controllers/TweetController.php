@@ -9,6 +9,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\Tweet\UpdateRequest;
+use Exception;
 
 class TweetController extends Controller
 {
@@ -66,11 +67,16 @@ class TweetController extends Controller
      * @param int $tweetId
      * @return View
      */
-    public function findByTweetId(int $tweetId): View
-    {
-        $tweet = $this->tweetModel->findByTweetId($tweetId);
-    
-        return view('tweet.show', compact('tweet'));
+    public function findByTweetId(int $tweetId)
+    {   
+        try{
+            $tweet = $this->tweetModel->findByTweetId($tweetId);
+            return view('tweet.show', compact('tweet'));
+        }
+        catch(Exception $e){
+            logger($e);
+            return redirect()->route('tweet.index')->with('message', 'ツイートが見つかりませんでした');
+        }
     }
 
     /**
