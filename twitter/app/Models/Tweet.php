@@ -57,7 +57,7 @@ class Tweet extends Model
      */
     public function findByTweetId(int $tweetId): Tweet
     {
-        return Tweet::find($tweetId);
+        return Tweet::findOrFail($tweetId);
     }
 
     /**

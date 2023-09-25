@@ -9,6 +9,11 @@
                     {{ session('success') }}
                 </div>
             @endif
+            @if(session('message'))
+                <div class="alert alert-success">
+                    {{ session('message') }}
+                </div>
+            @endif
             <div class="card bg-white mb-3">
                 <div class="card-body">
                     <h6 class="card-title">
