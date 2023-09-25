@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Arr;
 
 class Tweet extends Model
 {
@@ -56,6 +57,26 @@ class Tweet extends Model
      */
     public function findByTweetId(int $tweetId): Tweet
     {
-        return Tweet::find($tweetId);
+        return Tweet::findOrFail($tweetId);
+    }
+
+    /**
+     * ツイートを更新する
+     * 
+     * @param array $tweetPram
+     * @param Tweet $tweet
+     */
+    public function updateTweet(array $tweetParam, Tweet $tweet): void
+    {
+        $tweet->fill($tweetParam);
+        $tweet->update();
+    }
+
+    /**
+     * ユーザーを削除する
+     */
+    public function deleteTweet(): void
+    {
+        $this->delete();
     }
 }

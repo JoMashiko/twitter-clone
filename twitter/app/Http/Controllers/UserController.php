@@ -48,7 +48,7 @@ class UserController extends Controller
     /**
      * 更新内容を受け取り、ユーザー情報を更新する
      * 
-     * @param  UserRequest  $request
+     * @param  UpdateRequest  $request
      * @param  int $userId ユーザーID
      * @return RedirectResponse
      */

@@ -9,6 +9,11 @@
                     {{ session('success') }}
                 </div>
             @endif
+            @if (session('message'))
+                <div class="alert alert-success" role="alert">
+                    {{ session('message') }}
+                </div>
+            @endif
             @foreach($tweets as $tweet)
             <div class="card bg-white mb-3">
                 <a href="{{ route('tweet.show', $tweet->id) }}" class="card-body" style="text-decoration: none; color: inherit;">
