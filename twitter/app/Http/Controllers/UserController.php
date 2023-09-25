@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Contracts\View\View;
 use App\Http\Requests\User\UpdateRequest;
+use App\Models\Follower;
 use Illuminate\Http\RedirectResponse;
 
 class UserController extends Controller
@@ -14,10 +15,12 @@ class UserController extends Controller
      * コンストラクタ
      */
     private $userModel;
+    private $followerModel;
 
-    public function __construct(User $userModel)
+    public function __construct(User $userModel, Follower $followerModel)
     {
         $this->userModel = $userModel;
+        $this->followerModel = $followerModel;
     }
 
     /**
@@ -86,5 +89,31 @@ class UserController extends Controller
         $users = $this->userModel->getAllUsers();
 
         return view('user.index', compact('users'));
+    }
+
+    /**
+     * フォローする
+     *
+     * @param int $userId
+     * @return RedirectResponse
+     */
+    public function follow(int $followedUserId): RedirectResponse
+    {
+        $this->followerModel->follow($followedUserId);
+
+        return redirect()->route('user.index');
+    }
+
+    /**
+     * フォローを解除する
+     *
+     * @param int $user_id
+     * @return RedirectResponse
+     */
+    public function unfollow(int $followedUserId): RedirectResponse
+    {
+        $this->followerModel->unfollow($followedUserId);
+
+        return redirect()->route('user.index');
     }
 }

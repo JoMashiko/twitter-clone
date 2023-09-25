@@ -15,6 +15,7 @@
                                 <th>メールアドレス</th>
                                 <th>ユーザー名</th>
                                 <th>登録日</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -25,6 +26,22 @@
                                     <td>{{ $user->email }}</td>
                                     <td>{{ $user->user_name }}</td>
                                     <td>{{ $user->created_at }}</td>
+                                    <td>
+                                        <form method="POST" action="{{ route('user.follow', $user) }}">
+                                            @csrf
+                                            <button type="submit" class="btn btn-outline-dark me-md-2">
+                                                {{ __('Follow') }}
+                                            </button>
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <form method="POST" action="{{ route('user.unfollow', $user) }}">
+                                            @csrf
+                                            <button type="submit" class="btn btn-outline-dark me-md-2">
+                                                {{ __('UnFollow') }}
+                                            </button>
+                                        </form>
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>
