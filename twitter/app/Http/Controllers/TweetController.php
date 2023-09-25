@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Tweet\CreateTweetRequest;
+use App\Http\Requests\Tweet\UpdateRequest;
 use App\Models\Tweet;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Requests\Tweet\UpdateRequest;
 use Exception;
 use Illuminate\Support\Facades\Log;
 
@@ -42,13 +42,13 @@ class TweetController extends Controller
      */
     public function store(CreateTweetRequest $request): RedirectResponse
     {
-        try{
+        try {
             $userId = Auth::id();
             $tweetParam = $request->validated();
             $this->tweetModel->store($tweetParam, $userId);
 
             return redirect()->route('tweet.index')->with('success', 'ツイートが保存されました');
-        }catch(Exception $e){
+        } catch (Exception $e) {
             Log::error($e);
 
             return redirect()->route('tweet.index')->with('message', 'ツイートできませんでした');
@@ -62,9 +62,9 @@ class TweetController extends Controller
      */
     public function getAllTweets(): View
     {
-       $tweets = $this->tweetModel->getAllTweets();
+        $tweets = $this->tweetModel->getAllTweets();
 
-       return view('tweet.index', compact('tweets'));
+        return view('tweet.index', compact('tweets'));
     }
 
     /**
@@ -74,13 +74,12 @@ class TweetController extends Controller
      * @return View
      */
     public function findByTweetId(int $tweetId)
-    {   
-        try{
+    {
+        try {
             $tweet = $this->tweetModel->findByTweetId($tweetId);
 
             return view('tweet.show', compact('tweet'));
-        }
-        catch(Exception $e){
+        } catch (Exception $e) {
             Log::error($e);
 
             return redirect()->route('tweet.index')->with('message', 'ツイートが見つかりませんでした');
@@ -97,7 +96,7 @@ class TweetController extends Controller
     {
         $tweet = $this->tweetModel->findByTweetId($tweetId);
 
-        return view('tweet.edit',compact('tweet'));
+        return view('tweet.edit', compact('tweet'));
     }
 
     /**
@@ -109,14 +108,14 @@ class TweetController extends Controller
      */
     public function update(UpdateRequest $request, int $tweetId): RedirectResponse
     {
-        try{
+        try {
             $tweetParam = $request->validated();
             $tweet = $this->tweetModel->findByTweetId($tweetId);
             $this->authorize('update', $tweet);
             $tweet->updateTweet($tweetParam, $tweet);
 
             return redirect()->route('tweet.show', $tweetId)->with('success', '更新しました');
-        }catch(Exception $e){
+        } catch (Exception $e) {
             Log::error($e);
 
             return redirect()->route('tweet.show', $tweetId)->with('message', '更新に失敗しました');
@@ -131,12 +130,12 @@ class TweetController extends Controller
      */
     public function delete(int $tweetId): RedirectResponse
     {
-        try{
+        try {
             $user = $this->tweetModel->findByTweetId($tweetId);
             $user->deleteTweet();
-    
+
             return redirect()->route('tweet.index')->with('success', 'ツイートを削除しました');
-        }catch(Exception $e){
+        } catch (Exception $e) {
             Log::error($e);
 
             return redirect()->route('tweet.index')->with('message', 'ツイートを削除に失敗しました');
