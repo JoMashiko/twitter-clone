@@ -10,14 +10,16 @@ use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Http\RedirectResponse;
 
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
     protected $table = 'users'; //テーブル名
-    
+
     /**
      * The attributes that are mass assignable.
      *
@@ -63,13 +65,11 @@ class User extends Authenticatable
      * ユーザーIDに基づいてユーザーを検索し、一致するUserを返す。
      * 
      * @param int $id ユーザーID
-     * @return User|null
+     * @return User
      */
     public function findByUserId(int $id): User
     {
-        $user = $this->find($id);
-
-        return $user;
+        return $this->findOrFail($id);;
     }
 
     /**

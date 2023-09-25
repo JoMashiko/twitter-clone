@@ -56,7 +56,7 @@ class UserController extends Controller
      * @return RedirectResponse
      */
     public function update(UpdateRequest $request, int $userId): RedirectResponse
-    {   
+    {
         $user = $this->userModel->findByUserId($userId);
         // バリデーション済みデータの取得
         $userParam = $request->validated();

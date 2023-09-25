@@ -1,8 +1,9 @@
 <?php
 
 use App\Http\Controllers\TweetController;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Route;
+use Symfony\Component\Routing\Route as RoutingRoute;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,7 +28,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::group(['middleware' => 'auth'], function () {
 
     // マイページ
-    Route::prefix('user/{id}')->group(function() {
+    Route::prefix('user/{id}')->group(function () {
         // ユーザー詳細画面の表示
         Route::get('/', [UserController::class, 'findByUserId'])->name('user.show');
         // ユーザー編集画面の表示
@@ -64,4 +65,4 @@ Route::group(['middleware' => 'auth'], function () {
 });
 
 // ツイート一覧
-Route::get('/tweets', [TweetController:: class, 'getAllTweets'])->name('tweet.index');
+Route::get('/tweets', [TweetController::class, 'getAllTweets'])->name('tweet.index');
