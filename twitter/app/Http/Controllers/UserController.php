@@ -94,7 +94,7 @@ class UserController extends Controller
     /**
      * フォローする
      *
-     * @param int $userId
+     * @param int $followedUserId
      * @return RedirectResponse
      */
     public function follow(int $followedUserId): RedirectResponse
@@ -107,12 +107,12 @@ class UserController extends Controller
     /**
      * フォローを解除する
      *
-     * @param int $user_id
+     * @param int $unFollowedUserId
      * @return RedirectResponse
      */
-    public function unfollow(int $followedUserId): RedirectResponse
+    public function unfollow(int $unFollowedUserId): RedirectResponse
     {
-        $this->followerModel->unfollow($followedUserId);
+        $this->followerModel->unfollow($unFollowedUserId);
 
         return redirect()->route('user.index');
     }

@@ -62,4 +62,18 @@ class Follower extends Model
             ['followed_id', $followedUserId],
         ])->delete();
     }
+
+    /**
+     * フォロー判別
+     *
+     * @param integer $followedUserId
+     * @return boolean
+     */
+    public function isFollowing(int $followedUserId): bool
+    {
+        return Follower::where([
+            ['following_id', Auth::id()],
+            ['followed_id', $followedUserId],
+        ])->exists();
+    }
 }
