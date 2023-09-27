@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Contracts\View\View;
 use App\Http\Requests\User\UpdateRequest;
 use App\Models\Follower;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 
 class UserController extends Controller

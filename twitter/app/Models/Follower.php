@@ -64,16 +64,16 @@ class Follower extends Model
     }
 
     /**
-     * フォロー判別
+     * ログインユーザーが指定したユーザーをフォローしているかどうかを判定
      *
-     * @param integer $followedUserId
-     * @return boolean
+     * @param integer $targetUserId
+     * @return boolean フォローしている場合は true、それ以外の場合は false
      */
-    public function isFollowing(int $followedUserId): bool
+    public function isFollowing(int $targetUserId): bool
     {
         return Follower::where([
             ['following_id', Auth::id()],
-            ['followed_id', $followedUserId],
+            ['followed_id', $targetUserId],
         ])->exists();
     }
 }
