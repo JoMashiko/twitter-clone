@@ -47,9 +47,9 @@ Route::group(['middleware' => 'auth'], function () {
         // フォロー解除
         Route::post('/unfollow/{id}', [UserController::class, 'unfollow'])->name('user.unfollow');
         // フォロー一覧
-        Route::get('/followed', [UserController::class, 'getAllFollowedUsers'])->name('user.followed');
+        Route::get('/followed', [UserController::class, 'showFollowedUsers'])->name('user.followed');
         // フォロワー一覧
-        Route::get('/follower', [UserController::class, 'getAllFollowerUsers'])->name('user.follower');
+        Route::get('/follower', [UserController::class, 'showFollowerUsers'])->name('user.follower');
     });
 
 

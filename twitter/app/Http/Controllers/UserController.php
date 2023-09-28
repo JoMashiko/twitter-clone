@@ -122,7 +122,7 @@ class UserController extends Controller
      *
      * @return View
      */
-    public function getAllFollowedUsers(): View
+    public function showFollowedUsers(): View
     {
         $followedUsers = Auth::user()->following;
 
@@ -134,7 +134,7 @@ class UserController extends Controller
      *
      * @return View
      */
-    public function getAllFollowerUsers(): View
+    public function showFollowerUsers(): View
     {
         $followerUsers = Auth::user()->followers;
 
