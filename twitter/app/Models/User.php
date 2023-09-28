@@ -10,14 +10,16 @@ use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Http\RedirectResponse;
 
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
     protected $table = 'users'; //テーブル名
-    
+
     /**
      * The attributes that are mass assignable.
      *
@@ -63,13 +65,11 @@ class User extends Authenticatable
      * ユーザーIDに基づいてユーザーを検索し、一致するUserを返す。
      * 
      * @param int $id ユーザーID
-     * @return User|null
+     * @return User
      */
     public function findByUserId(int $id): User
     {
-        $user = $this->find($id);
-
-        return $user;
+        return $this->findOrFail($id);;
     }
 
     /**
@@ -107,8 +107,28 @@ class User extends Authenticatable
      * 
      * @return HasMany
      */
-    public function tweets() : HasMany
+    public function tweets(): HasMany
     {
         return $this->hasMany(Tweet::class);
+    }
+
+    /**
+     * リレーション(usersテーブルのidとfollowersテーブルのfollowing_idを紐付ける)
+     *
+     * @return HasMany
+     */
+    public function follows(): HasMany
+    {
+        return $this->hasmany(Follower::class, 'following_id', 'id');
+    }
+
+    /**
+     * リレーション(usersテーブルのidとfollowersテーブルのfollowed_idを紐付ける)
+     *
+     * @return HasMany
+     */
+    public function followers(): HasMany
+    {
+        return $this->hasmany(Follower::class, 'followed_id', 'id');
     }
 }
