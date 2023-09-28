@@ -30,7 +30,7 @@ Route::group(['middleware' => 'auth'], function () {
     // マイページ
     Route::prefix('user/{id}')->group(function () {
         // ユーザー詳細画面の表示
-        Route::get('/', [UserController::class, 'findByUserId'])->name('user.show');
+        Route::get('/', [UserController::class, 'showUserInfo'])->name('user.show');
         // ユーザー編集画面の表示
         Route::get('/edit', [UserController::class, 'edit'])->name('user.edit');
         // ユーザー情報更新

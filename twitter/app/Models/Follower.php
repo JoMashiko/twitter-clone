@@ -81,4 +81,26 @@ class Follower extends Model
             ['followed_id', $targetUserId],
         ])->exists();
     }
+
+    /**
+     * フォローの数をカウントする
+     *
+     * @param User $user
+     * @return integer
+     */
+    public function countFollowedUsers(User $user): int
+    {
+        return $user->following()->count();
+    }
+
+    /**
+     * フォロワーの数をカウントする
+     *
+     * @param User $user
+     * @return integer
+     */
+    public function countFollowerUsers(User $user): int
+    {
+        return $user->followers()->count();
+    }
 }
