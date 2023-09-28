@@ -99,7 +99,7 @@ class UserController extends Controller
      */
     public function follow(int $followedUserId): RedirectResponse
     {
-        $this->followerModel->follow($followedUserId);
+        $this->followerModel->follow(Auth::id(), $followedUserId);
 
         return redirect()->route('user.index');
     }
@@ -112,7 +112,7 @@ class UserController extends Controller
      */
     public function unfollow(int $unFollowedUserId): RedirectResponse
     {
-        $this->followerModel->unfollow($unFollowedUserId);
+        $this->followerModel->unfollow(Auth::id(), $unFollowedUserId);
 
         return redirect()->route('user.index');
     }

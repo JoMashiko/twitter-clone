@@ -95,38 +95,38 @@ class UserPolicy
     /**
      * Authユーザーと表示されているユーザーのIDが一致しない場合のみフォロー・アンフォローボタンを表示
      *
-     * @param User $authUser
+     * @param User $user
      * @param User $targetUser
      * @return void
      */
-    public function followOrUnfollow(User $authUser, User $targetUser)
+    public function followOrUnfollow(User $user, User $targetUser)
     {
-        return $authUser->id !== $targetUser->id;
+        return $user->id !== $targetUser->id;
     }
 
     /**
      * すでにフォローしている場合はfalseを返す
      *
-     * @param User $authUser
+     * @param User $user
      * @param User $targetUser
      * @return bool
      */
-    public function follow(User $authUser, User $targetUser)
+    public function follow(User $user, User $targetUser)
     {
         $follower = new Follower();
-        return !$follower->isFollowing($targetUser->id);
+        return !$follower->isFollowing($user->id, $targetUser->id);
     }
 
     /**
      * フォローしている場合はtrueを返す
      *
-     * @param User $authUser
+     * @param User $user
      * @param User $targetUser
      * @return bool
      */
-    public function unfollow(User $authUser, User $targetUser)
+    public function unFollow(User $user, User $targetUser)
     {
         $follower = new Follower();
-        return $follower->isFollowing($targetUser->id);
+        return $follower->isFollowing($user->id, $targetUser->id);
     }
 }
