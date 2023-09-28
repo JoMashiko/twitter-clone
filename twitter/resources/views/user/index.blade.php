@@ -26,8 +26,8 @@
                                     <td>{{ $user->email }}</td>
                                     <td>{{ $user->user_name }}</td>
                                     <td>{{ $user->created_at }}</td>
-                                    @can('followOrUnfollow', $user)
                                     <td>
+                                        @can('followOrUnfollow', $user)
                                         <form method="POST" action="{{ route('user.follow', $user) }}">
                                             @csrf
                                             @can('follow', $user)
@@ -44,8 +44,8 @@
                                                 </button>
                                             @endcan
                                         </form>
+                                        @endcan
                                     </td>
-                                    @endcan
                                 </tr>
                             @endforeach
                         </tbody>

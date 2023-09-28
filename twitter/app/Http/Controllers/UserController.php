@@ -116,4 +116,28 @@ class UserController extends Controller
 
         return redirect()->route('user.index');
     }
+
+    /**
+     * フォロー一覧を表示する
+     *
+     * @return View
+     */
+    public function getAllFollowedUsers(): View
+    {
+        $followedUsers = Auth::user()->following;
+
+        return view('user.followed', compact('followedUsers'));
+    }
+
+    /**
+     * フォロワー一覧を表示する
+     *
+     * @return View
+     */
+    public function getAllFollowerUsers(): View
+    {
+        $followerUsers = Auth::user()->followers;
+
+        return view('user.follower', compact('followerUsers'));
+    }
 }

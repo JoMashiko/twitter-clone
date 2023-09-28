@@ -39,12 +39,18 @@ Route::group(['middleware' => 'auth'], function () {
         Route::delete('/', [UserController::class, 'delete'])->name('user.delete');
     });
 
-    // ユーザー一覧
-    Route::get('/users', [UserController::class, 'getAllUsers'])->name('user.index');
-    // フォロー
-    Route::post('users/follow/{id}', [UserController::class, 'follow'])->name('user.follow');
-    // フォロー解除
-    Route::post('users/unfollow/{id}', [UserController::class, 'unfollow'])->name('user.unfollow');
+    Route::prefix('users')->group(function () {
+        // ユーザー一覧
+        Route::get('/', [UserController::class, 'getAllUsers'])->name('user.index');
+        // フォロー
+        Route::post('/follow/{id}', [UserController::class, 'follow'])->name('user.follow');
+        // フォロー解除
+        Route::post('/unfollow/{id}', [UserController::class, 'unfollow'])->name('user.unfollow');
+        // フォロー一覧
+        Route::get('/followed', [UserController::class, 'getAllFollowedUsers'])->name('user.followed');
+        // フォロワー一覧
+        Route::get('/follower', [UserController::class, 'getAllFollowerUsers'])->name('user.follower');
+    });
 
 
     // ツイート

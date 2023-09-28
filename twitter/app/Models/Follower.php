@@ -2,9 +2,11 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Facades\Auth;
 
 class Follower extends Model
@@ -19,11 +21,11 @@ class Follower extends Model
     /**
      * リレーション(followersテーブルのfollowing_idとusersテーブルのidを紐付ける)
      *
-     * @return BelongsTo
+     * @return belongsToMany
      */
-    public function followingUser(): BelongsTo
+    public function followingUsers(): belongsToMany
     {
-        return $this->belongsTo(User::class, 'following_id', 'id');
+        return $this->belongsToMany(User::class);
     }
 
     /**

@@ -69,6 +69,14 @@
                                         {{ __('ユーザー一覧') }}
                                     </button>
 
+                                    <button type="button" class="dropdown-item" onclick="location.href='{{ route('user.followed') }}'">
+                                        {{ __('フォロー一覧') }}
+                                    </button>
+
+                                    <button type="button" class="dropdown-item" onclick="location.href='{{ route('user.follower') }}'">
+                                        {{ __('フォロワー一覧') }}
+                                    </button>
+
                                     <button type="button" class="dropdown-item" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                         {{ __('ログアウト') }}
                                     </button>
