@@ -19,7 +19,7 @@ class Follower extends Model
     public $timestamps = false;
 
     /**
-     * リレーション(followersテーブルのfollowing_idとusersテーブルのidを紐付ける)
+     * リレーション
      *
      * @return belongsToMany
      */
@@ -29,13 +29,13 @@ class Follower extends Model
     }
 
     /**
-     * リレーション(followersテーブルのfollowed_idとusersテーブルのidを紐付ける)
+     * リレーション
      *
-     * @return BelongsTo
+     * @return belongsToMany
      */
-    public function followedUser(): BelongsTo
+    public function followedUser(): belongsToMany
     {
-        return $this->belongsTo(User::class, 'followed_id', 'id');
+        return $this->belongsToMany(User::class);
     }
 
     /**
