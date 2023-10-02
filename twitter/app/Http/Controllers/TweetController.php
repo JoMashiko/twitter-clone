@@ -141,4 +141,27 @@ class TweetController extends Controller
             return redirect()->route('tweet.index')->with('message', 'ツイートを削除に失敗しました');
         }
     }
+
+    /**
+     * ツイートを検索する
+     *
+     * @param Request $request
+     * @return View
+     */
+    public function searchByQuery(Request $request): View
+    {
+        try {
+            $query = $request->input('query');
+            $tweets = $this->tweetModel->getAllTweets();
+            if ($query) {
+                $tweets = $this->tweetModel->searchByQuery($query);
+            }
+
+            return view('tweet.index', compact('tweets', 'query'));
+        } catch (Exception $e) {
+            Log::error($e);
+
+            return redirect()->route('tweet.index')->with('message', 'エラーが発生しました');
+        }
+    }
 }
