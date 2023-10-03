@@ -23,9 +23,16 @@
                     <p>{{ __('誕生日: ') . $user->birthday }}</p>
                     <p>{{ __('ユーザーネーム: ') . $user->user_name }}</p>
                     <p>{{ __('自己紹介: ') . $user->bio_text }}</p>
+                   <p>
+                        <a href="{{ route('user.followed') }}">
+                            {{ $followedCount }} 
+                            <span style="margin-right: 10px">Following</span>
+                        </a>
+                        <a href="{{ route('user.follower') }}">{{ $followerCount }} Follower</a>
+                    </p>
                         
-                    <div class="d-flex">
-                        <button type="button" class="btn btn-dark" onclick="location.href='{{ route('user.edit', $user) }}'">
+                    <div class="d-flex d-grid justify-content-md-end">
+                        <button type="button" class="btn btn-outline-dark" onclick="location.href='{{ route('user.edit', $user) }}'">
                             {{ __('編集') }}
                         </button>
                         <form method='post' action={{ route('user.delete', $user) }} onsubmit="

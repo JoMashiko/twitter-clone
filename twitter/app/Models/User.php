@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+
 use Illuminate\Http\RedirectResponse;
 
 class User extends Authenticatable
@@ -113,22 +115,22 @@ class User extends Authenticatable
     }
 
     /**
-     * リレーション(usersテーブルのidとfollowersテーブルのfollowing_idを紐付ける)
+     * フォローしているユーザーとの多対多のリレーション(フォローしているユーザーの取得)
      *
-     * @return HasMany
+     * @return BelongsToMany
      */
-    public function follows(): HasMany
+    public function following(): BelongsToMany
     {
-        return $this->hasmany(Follower::class, 'following_id', 'id');
+        return $this->belongsToMany(User::class, 'followers', 'following_id', 'followed_id');
     }
 
     /**
-     * リレーション(usersテーブルのidとfollowersテーブルのfollowed_idを紐付ける)
+     * このユーザーをフォローしているユーザーとの多対多のリレーション(フォロワーの取得)
      *
-     * @return HasMany
+     * @return BelongsToMany
      */
-    public function followers(): HasMany
+    public function followers(): BelongsToMany
     {
-        return $this->hasmany(Follower::class, 'followed_id', 'id');
+        return $this->belongsToMany(User::class, 'followers', 'followed_id', 'following_id');
     }
 }

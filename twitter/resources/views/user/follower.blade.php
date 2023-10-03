@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">ユーザー一覧</div>
+                <div class="card-header">フォロワー一覧</div>
                 <div class="card-body">
                     <table class="table">
                         <thead>
@@ -19,7 +19,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($users as $user)
+                            @foreach($followerUsers as $user)
                                 <tr>
                                     <td>{{ $user->id }}</td>
                                     <td>{{ $user->display_name }}</td>
