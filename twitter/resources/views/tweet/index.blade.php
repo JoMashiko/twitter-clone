@@ -14,7 +14,7 @@
                     {{ session('message') }}
                 </div>
             @endif
-            <form method="GET" action="{{ route('tweet.search') }}">
+            <form method="GET" action="{{ route('tweet.index') }}">
                 <div class="input-group" style="margin-bottom: 20px">
                     @if(isset($query))
                         <input type="text"  name='query' class="form-control" value="{{ $query }}">

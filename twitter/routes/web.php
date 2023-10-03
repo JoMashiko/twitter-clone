@@ -72,5 +72,3 @@ Route::group(['middleware' => 'auth'], function () {
 
 // ツイート一覧
 Route::get('/tweets', [TweetController::class, 'getAllTweets'])->name('tweet.index');
-// 検索
-Route::get('/tweets/search', [TweetController::class, 'searchByQuery'])->name('tweet.search');
