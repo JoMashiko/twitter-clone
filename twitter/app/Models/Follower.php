@@ -2,9 +2,11 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Facades\Auth;
 
 class Follower extends Model
@@ -17,23 +19,23 @@ class Follower extends Model
     public $timestamps = false;
 
     /**
-     * リレーション(followersテーブルのfollowing_idとusersテーブルのidを紐付ける)
+     * リレーション
      *
-     * @return BelongsTo
+     * @return belongsToMany
      */
-    public function followingUser(): BelongsTo
+    public function followingUsers(): belongsToMany
     {
-        return $this->belongsTo(User::class, 'following_id', 'id');
+        return $this->belongsToMany(User::class);
     }
 
     /**
-     * リレーション(followersテーブルのfollowed_idとusersテーブルのidを紐付ける)
+     * リレーション
      *
-     * @return BelongsTo
+     * @return belongsToMany
      */
-    public function followedUser(): BelongsTo
+    public function followedUser(): belongsToMany
     {
-        return $this->belongsTo(User::class, 'followed_id', 'id');
+        return $this->belongsToMany(User::class);
     }
 
     /**
@@ -78,5 +80,27 @@ class Follower extends Model
             ['following_id', $userId],
             ['followed_id', $targetUserId],
         ])->exists();
+    }
+
+    /**
+     * フォローの数をカウントする
+     *
+     * @param User $user
+     * @return integer
+     */
+    public function countFollowedUsers(User $user): int
+    {
+        return $user->following()->count();
+    }
+
+    /**
+     * フォロワーの数をカウントする
+     *
+     * @param User $user
+     * @return integer
+     */
+    public function countFollowerUsers(User $user): int
+    {
+        return $user->followers()->count();
     }
 }

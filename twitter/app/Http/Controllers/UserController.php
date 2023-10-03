@@ -29,11 +29,13 @@ class UserController extends Controller
      * @param int $userId ユーザーID
      * @return View
      */
-    public function findByUserId(int $userId): View
+    public function showUserInfo(int $userId): View
     {
         $user = $this->userModel->findByUserId($userId);
+        $followedCount = $this->followerModel->countFollowedUsers($user);
+        $followerCount = $this->followerModel->countFollowerUsers($user);
 
-        return view('user.show', compact('user'));
+        return view('user.show', compact('user', 'followedCount', 'followerCount'));
     }
 
     /**
@@ -115,5 +117,29 @@ class UserController extends Controller
         $this->followerModel->unfollow(Auth::id(), $unFollowedUserId);
 
         return redirect()->route('user.index');
+    }
+
+    /**
+     * ログインユーザーのフォロー一覧を表示する
+     *
+     * @return View
+     */
+    public function showFollowedUsers(): View
+    {
+        $followedUsers = Auth::user()->following;
+
+        return view('user.followed', compact('followedUsers'));
+    }
+
+    /**
+     * ログインユーザーのフォロワー一覧を表示する
+     *
+     * @return View
+     */
+    public function showFollowerUsers(): View
+    {
+        $followerUsers = Auth::user()->followers;
+
+        return view('user.follower', compact('followerUsers'));
     }
 }
