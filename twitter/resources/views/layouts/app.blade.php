@@ -15,6 +15,9 @@
 
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    
+    {{-- Font Awesome --}}
+    <script src="https://kit.fontawesome.com/aab7668519.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <div id="app">

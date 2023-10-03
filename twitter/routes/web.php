@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\TweetController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\FavoriteController;
+use App\Models\Favorite;
 use Illuminate\Support\Facades\Route;
 use Symfony\Component\Routing\Route as RoutingRoute;
 
@@ -66,3 +68,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 // ツイート一覧
 Route::get('/tweets', [TweetController::class, 'getAllTweets'])->name('tweet.index');
+//　いいね
+Route::get('/tweets/favorite/{tweetId}', [FavoriteController::class, 'favorite'])->name('tweet.favorite');
+// いいね解除
+Route::get('/tweets/unfavorite/{tweetId}', [FavoriteController::class, 'unFavorite'])->name('tweet.unFavorite');

@@ -26,6 +26,19 @@
                         {{ $tweet->body }}
                     </p>
                 </a>
+                <div style="margin-left: 20px">
+                    @if($tweet->isFavorite($tweet->id, auth()->id()))
+                        <a href="{{ route('tweet.unFavorite', $tweet->id) }}" style="text-decoration: none;">
+                            <i class="fa-solid fa-heart" style="color: #f91880;"></i>
+                            <span style="color: #f91880; margin-left: 5px;">{{ $tweet->favorites->count() }}</span>
+                        </a>
+                    @else
+                        <a href="{{ route('tweet.favorite', $tweet->id) }}" style="text-decoration: none;">
+                            <i class="fa-regular fa-heart" style="color: #202124;"></i>
+                            <span style="color: #202124; margin-left: 5px;">{{ $tweet->favorites->count() }}</span>
+                        </a>
+                    @endif
+                </div>
             </div>
             @endforeach
         </div>

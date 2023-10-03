@@ -79,4 +79,28 @@ class Tweet extends Model
     {
         $this->delete();
     }
+
+    /**
+     * リレーション
+     *
+     * @return void
+     */
+    public function favorites()
+    {
+        return $this->hasMany(Favorite::class, 'tweet_id');
+    }
+
+    /**
+     * いいねされているか判別する
+     *
+     * @param integer $tweetId
+     * @param integer $userId
+     * @return boolean
+     */
+    public function isFavorite(int $tweetId, int $userId): bool
+    {
+        return Favorite::where('tweet_id', $tweetId)
+            ->where('user_id', $userId)
+            ->exists();
+    }
 }
