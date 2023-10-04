@@ -60,7 +60,7 @@
                 if(fav_val=='1'){
                     // いいね済の場合
                     $.ajax({
-                    url: "/tweets/unfavorite",
+                    url: "/tweet/unfavorite",
                     method: "POST",
                     data: { tweetId : tweetId },
                     dataType: "json",
@@ -81,7 +81,7 @@
                 }else{
                     // いいね未の場合
                     $.ajax({
-                    url: "/tweets/favorite",
+                    url: "/tweet/favorite",
                     method: "POST",
                     data: { tweetId : tweetId },
                     dataType: "json",

@@ -69,12 +69,12 @@ Route::group(['middleware' => 'auth'], function () {
         Route::put('/{id}/update', [TweetController::class, 'update'])->name('tweet.update');
         // ツイート削除
         Route::delete('/{id}/delete', [TweetController::class, 'delete'])->name('tweet.delete');
+        //　いいね
+        Route::post('/favorite', [FavoriteController::class, 'favorite'])->name('tweet.favorite');
+        // いいね解除
+        Route::post('/unfavorite', [FavoriteController::class, 'unfavorite'])->name('tweet.unfavorite');
     });
 
     // ツイート一覧
     Route::get('/tweets', [TweetController::class, 'getAllTweets'])->name('tweet.index');
-    //　いいね
-    Route::post('/tweets/favorite', [FavoriteController::class, 'favorite'])->name('tweet.favorite');
-    // いいね解除
-    Route::post('/tweets/unfavorite', [FavoriteController::class, 'unfavorite'])->name('tweet.unfavorite');
 });
