@@ -70,11 +70,11 @@ Route::group(['middleware' => 'auth'], function () {
         // ツイート削除
         Route::delete('/{id}/delete', [TweetController::class, 'delete'])->name('tweet.delete');
     });
-});
 
-// ツイート一覧
-Route::get('/tweets', [TweetController::class, 'getAllTweets'])->name('tweet.index');
-//　いいね
-Route::post('/tweets/favorite', [FavoriteController::class, 'favorite'])->name('tweet.favorite');
-// いいね解除
-Route::post('/tweets/unfavorite', [FavoriteController::class, 'unfavorite'])->name('tweet.unfavorite');
+    // ツイート一覧
+    Route::get('/tweets', [TweetController::class, 'getAllTweets'])->name('tweet.index');
+    //　いいね
+    Route::post('/tweets/favorite', [FavoriteController::class, 'favorite'])->name('tweet.favorite');
+    // いいね解除
+    Route::post('/tweets/unfavorite', [FavoriteController::class, 'unfavorite'])->name('tweet.unfavorite');
+});

@@ -34,14 +34,11 @@ class FavoriteController extends Controller
         $userId = Auth::id();
         $this->favoritetModel->favorite($tweetId, $userId);
 
-        // いいねの数を取得して$jsonに格納
+        // いいねの数を取得
         $tweet = $this->tweetModel->findByTweetId($tweetId);
         $favoriteCount = $tweet->favorites->count();
-        $json = [
-            'favoriteCount' => $favoriteCount,
-        ];
 
-        return response()->json($json);
+        return response()->json(['favoriteCount' => $favoriteCount]);
     }
 
     /**
@@ -55,13 +52,10 @@ class FavoriteController extends Controller
         $userId = Auth::id();
         $this->favoritetModel->unfavorite($tweetId, $userId);
 
-        // いいねの数を取得して$jsonに格納
+        // いいねの数を取得
         $tweet = $this->tweetModel->findByTweetId($tweetId);
         $favoriteCount = $tweet->favorites->count();
-        $json = [
-            'favoriteCount' => $favoriteCount,
-        ];
 
-        return response()->json($json);
+        return response()->json(['favoriteCount' => $favoriteCount]);
     }
 }
