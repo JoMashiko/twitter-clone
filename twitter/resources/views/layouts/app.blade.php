@@ -18,6 +18,9 @@
     
     {{-- Font Awesome --}}
     <script src="https://kit.fontawesome.com/aab7668519.js" crossorigin="anonymous"></script>
+
+    {{-- jquery --}}
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 </head>
 <body>
     <div id="app">

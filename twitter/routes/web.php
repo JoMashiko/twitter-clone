@@ -75,6 +75,6 @@ Route::group(['middleware' => 'auth'], function () {
 // ツイート一覧
 Route::get('/tweets', [TweetController::class, 'getAllTweets'])->name('tweet.index');
 //　いいね
-Route::get('/tweets/favorite/{tweetId}', [FavoriteController::class, 'favorite'])->name('tweet.favorite');
+Route::post('/tweets/favorite', [FavoriteController::class, 'favorite'])->name('tweet.favorite');
 // いいね解除
-Route::get('/tweets/unfavorite/{tweetId}', [FavoriteController::class, 'unFavorite'])->name('tweet.unFavorite');
+Route::post('/tweets/unfavorite', [FavoriteController::class, 'unfavorite'])->name('tweet.unfavorite');
