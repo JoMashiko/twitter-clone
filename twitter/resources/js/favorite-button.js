@@ -11,10 +11,10 @@ $(document).ready(function(){
         if(fav_val=='1'){
             // いいね済の場合
             $.ajax({
-            url: "/tweet/unfavorite",
-            method: "POST",
-            data: { tweetId : tweetId },
-            dataType: "json",
+                url: "/tweet/unfavorite",
+                method: "POST",
+                data: { tweetId : tweetId },
+                dataType: "json",
             }).done(function(data){
                 // 成功時の処理
                 clickedButton.attr('fav_val','0'); //fav_val属性を更新
@@ -27,15 +27,15 @@ $(document).ready(function(){
                 favoriteCountSpan.html(data.favoriteCount);
                 favoriteCountSpan.css('color', '#202124');
             }).fail((error) => {
-            console.log(error.statusText);
+                console.log(error.statusText);
             });
-        }else{
+        } else {
             // いいね未の場合
             $.ajax({
-            url: "/tweet/favorite",
-            method: "POST",
-            data: { tweetId : tweetId },
-            dataType: "json",
+                url: "/tweet/favorite",
+                method: "POST",
+                data: { tweetId : tweetId },
+                dataType: "json",
             }).done(function(data){
                 // 成功時の処理
                 clickedButton.attr('fav_val','1') //fav_val属性を更新
@@ -48,7 +48,7 @@ $(document).ready(function(){
                 favoriteCountSpan.html(data.favoriteCount);
                 favoriteCountSpan.css('color', '#f91880');
             }).fail((error) => {
-            console.log(error.statusText);
+                console.log(error.statusText);
             });
         }
     });
