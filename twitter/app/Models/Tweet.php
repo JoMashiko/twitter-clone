@@ -81,6 +81,40 @@ class Tweet extends Model
     }
 
     /**
+     * リレーション
+     *
+     * @return void
+     */
+    public function favorites()
+    {
+        return $this->hasMany(Favorite::class, 'tweet_id');
+    }
+
+    /**
+     * いいねされているか判別する
+     *
+     * @param integer $tweetId
+     * @param integer $userId
+     * @return boolean
+     */
+    public function isFavorite(int $tweetId, int $userId): bool
+    {
+        return Favorite::where('tweet_id', $tweetId)
+            ->where('user_id', $userId)
+            ->exists();
+    }
+
+    /**
+     * いいね数をカウントする
+     *
+     * @return void
+     */
+    public function favoriteCount(): int
+    {
+        return $this->favorites->count();
+    }
+
+    /** 
      * ツイートを検索する
      *
      * @param string $query
