@@ -56,15 +56,26 @@ class TweetController extends Controller
     }
 
     /**
-     * ツイート一覧を表示する
+     * ツイート一覧・検索結果を表示する
      * 
+     * @param Request $request
      * @return View
      */
-    public function getAllTweets(): View
+    public function getAllTweets(Request $request): View
     {
-        $tweets = $this->tweetModel->getAllTweets();
+        try {
+            $query = $request->input('query');
+            $tweets = $this->tweetModel->getAllTweets();
+            if ($query) {
+                $tweets = $this->tweetModel->searchByQuery($query);
+            }
 
-        return view('tweet.index', compact('tweets'));
+            return view('tweet.index', compact('tweets', 'query'));
+        } catch (Exception $e) {
+            Log::error($e);
+
+            return redirect()->route('tweet.index')->with('message', 'エラーが発生しました');
+        }
     }
 
     /**
