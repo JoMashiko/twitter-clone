@@ -113,4 +113,15 @@ class Tweet extends Model
     {
         return $this->favorites->count();
     }
+
+    /** 
+     * ツイートを検索する
+     *
+     * @param string $query
+     * @return Collection
+     */
+    public function searchByQuery(string $query): Collection
+    {
+        return Tweet::where('body', 'LIKE', '%' . $query . '%')->get();
+    }
 }
