@@ -49,17 +49,27 @@ class Favorite extends Model
     }
 
     /**
-     * ツイートIDに基づくツイートのいいねを解除
+     * ツイートIDとユーザーIDに基づいて、いいねを検索
      *
      * @param integer $tweetId
      * @param integer $userId
-     * @return void
+     * @return Favorite|null
      */
-    public function unfavorite(int $tweetId, int $userId): void
+    public function findFavorite(int $tweetId, int $userId): ?Favorite
     {
-        $favorite = Favorite::where('tweet_id', $tweetId)
+        return Favorite::where('tweet_id', $tweetId)
             ->where('user_id', $userId)
             ->first();
+    }
+
+    /**
+     * ツイートIDに基づくツイートのいいねを解除
+     *
+     * @param Favorite $favorite
+     * @return void
+     */
+    public function unfavorite(Favorite $favorite): void
+    {
         $favorite->delete();
     }
 }

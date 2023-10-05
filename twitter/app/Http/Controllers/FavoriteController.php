@@ -14,12 +14,12 @@ class FavoriteController extends Controller
     /**
      * コンストラクタ
      */
-    private $favoritetModel;
+    private $favoriteModel;
     private $tweetModel;
 
     public function __construct(Favorite $favoriteModel, Tweet $tweetModel)
     {
-        $this->favoritetModel = $favoriteModel;
+        $this->favoriteModel = $favoriteModel;
         $this->tweetModel = $tweetModel;
     }
 
@@ -32,7 +32,9 @@ class FavoriteController extends Controller
     {
         $tweetId = request()->get('tweetId');
         $userId = Auth::id();
-        $this->favoritetModel->favorite($tweetId, $userId);
+
+        // いいねの処理
+        $this->favoriteModel->favorite($tweetId, $userId);
 
         // いいねの数を取得
         $tweet = $this->tweetModel->findByTweetId($tweetId);
@@ -50,7 +52,12 @@ class FavoriteController extends Controller
     {
         $tweetId = request()->get('tweetId');
         $userId = Auth::id();
-        $this->favoritetModel->unfavorite($tweetId, $userId);
+
+        // いいね解除処理
+        $favorite = $this->favoriteModel->findFavorite($tweetId, $userId);
+        if ($favorite) {
+            $this->favoriteModel->unfavorite($favorite);
+        }
 
         // いいねの数を取得
         $tweet = $this->tweetModel->findByTweetId($tweetId);
