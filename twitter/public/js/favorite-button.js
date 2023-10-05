@@ -37,6 +37,8 @@ $(document).ready(function () {
         favoriteCountSpan.css('color', '#202124');
       }).fail(function (error) {
         console.log(error.statusText);
+        // エラーメッセージ
+        alert("通信エラーが発生しました。");
       });
     } else {
       // いいね未の場合
@@ -60,6 +62,8 @@ $(document).ready(function () {
         favoriteCountSpan.css('color', '#f91880');
       }).fail(function (error) {
         console.log(error.statusText);
+        // エラーメッセージ
+        alert("通信エラーが発生しました。");
       });
     }
   });
