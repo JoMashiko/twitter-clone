@@ -103,4 +103,14 @@ class Tweet extends Model
             ->where('user_id', $userId)
             ->exists();
     }
+
+    /**
+     * いいね数をカウントする
+     *
+     * @return void
+     */
+    public function favoriteCount(): int
+    {
+        return $this->favorites->count();
+    }
 }
