@@ -3,8 +3,7 @@
 use App\Http\Controllers\TweetController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\FavoriteController;
-use App\Models\Favorite;
-use App\Models\Reply;
+use App\Http\Controllers\ReplyController;
 use Illuminate\Support\Facades\Route;
 use Symfony\Component\Routing\Route as RoutingRoute;
 

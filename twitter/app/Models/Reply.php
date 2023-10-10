@@ -17,14 +17,16 @@ class Reply extends Model
     /**
      * リプライを保存する
      *
-     * @param array $reply
+     * @param int $tweetId
      * @param integer $userId
+     * @param array $reply
      * @return void
      */
-    public function store(array $reply, int $userId): void
+    public function store(int $tweetId, int $userId, array $reply): void
     {
-        $this->fill($reply);
+        $this->tweet_id = $tweetId;
         $this->user_id = $userId;
+        $this->fill($reply);
         $this->save();
     }
 

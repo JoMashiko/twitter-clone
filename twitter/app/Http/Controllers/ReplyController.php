@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CreateReplyRequest;
+use App\Http\Requests\Reply\CreateReplyRequest;
 use App\Models\Reply;
 use Exception;
 use Illuminate\Http\JsonResponse;
@@ -23,14 +23,14 @@ class ReplyController extends Controller
         $this->reply = $reply;
     }
 
-    public function store(CreateReplyRequest $request): JsonResponse
+    public function store(CreateReplyRequest $request, int $tweetId): RedirectResponse
     {
         try {
             $reply = $request->validated();
             $userId = Auth::id();
-            $this->reply->store($reply, $userId);
+            $this->reply->store($tweetId, $userId, $reply);
 
-            return redirect()->json();
+            return redirect()->route('tweet.show', $tweetId)->with('reply', '保存しました');
         } catch (Exception $e) {
             Log::error($e);
 
