@@ -67,25 +67,24 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    <button type="button" class="dropdown-item" onclick="location.href='{{ route('user.show', Auth::id()) }}'">
+                                    <a href="{{ route('user.show', Auth::id()) }}" class="dropdown-item">
                                         {{ __('マイページ') }}
-                                    </button>
+                                    </a>
 
-                                    <button type="button" class="dropdown-item" onclick="location.href='{{ route('user.index') }}'">
+                                    <a href="{{ route('user.index') }}" class="dropdown-item">
                                         {{ __('ユーザー一覧') }}
-                                    </button>
+                                    </a>
 
-                                    <button type="button" class="dropdown-item" onclick="location.href='{{ route('tweet.favorites') }}'">
+                                    <a href="{{ route('tweet.favorites') }}" class="dropdown-item">
                                         {{ __('いいね一覧') }}
-                                    </button>
-
-                                    <button type="button" class="dropdown-item" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                        {{ __('ログアウト') }}
-                                    </button>
-
+                                    </a>
+                                    
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                         @csrf
                                     </form>
+                                    <a href="{{ route('logout') }}" class="dropdown-item" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                        {{ __('ログアウト') }}
+                                    </a>
                                 </div>
                             </li>
                         @endguest
