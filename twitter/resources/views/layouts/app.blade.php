@@ -75,6 +75,10 @@
                                         {{ __('ユーザー一覧') }}
                                     </button>
 
+                                    <button type="button" class="dropdown-item" onclick="location.href='{{ route('tweet.favorites') }}'">
+                                        {{ __('いいね一覧') }}
+                                    </button>
+
                                     <button type="button" class="dropdown-item" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                         {{ __('ログアウト') }}
                                     </button>
