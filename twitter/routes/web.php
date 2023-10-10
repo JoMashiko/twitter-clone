@@ -4,6 +4,7 @@ use App\Http\Controllers\TweetController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\FavoriteController;
 use App\Models\Favorite;
+use App\Models\Reply;
 use Illuminate\Support\Facades\Route;
 use Symfony\Component\Routing\Route as RoutingRoute;
 
@@ -73,6 +74,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/favorite', [FavoriteController::class, 'favorite'])->name('tweet.favorite');
         // いいね解除
         Route::post('/unfavorite', [FavoriteController::class, 'unfavorite'])->name('tweet.unfavorite');
+        // リプライ保存
+        Route::post('/{id}/store', [ReplyController::class, 'store'])->name('reply.store');
     });
 
     // ツイート一覧

@@ -124,4 +124,14 @@ class Tweet extends Model
     {
         return Tweet::where('body', 'LIKE', '%' . $query . '%')->get();
     }
+
+    /**
+     * リレーション
+     *
+     * @return void
+     */
+    public function replies()
+    {
+        return $this->hasMany(Reply::class);
+    }
 }

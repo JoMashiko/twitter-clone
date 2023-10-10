@@ -133,4 +133,14 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(User::class, 'followers', 'followed_id', 'following_id');
     }
+
+    /**
+     * リレーション
+     *
+     * @return void
+     */
+    public function replies()
+    {
+        return $this->hasMany(Reply::class);
+    }
 }
