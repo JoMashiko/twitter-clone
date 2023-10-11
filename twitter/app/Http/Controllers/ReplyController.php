@@ -23,6 +23,13 @@ class ReplyController extends Controller
         $this->reply = $reply;
     }
 
+    /**
+     * リプライを保存する
+     *
+     * @param CreateReplyRequest $request
+     * @param integer $tweetId
+     * @return RedirectResponse
+     */
     public function store(CreateReplyRequest $request, int $tweetId): RedirectResponse
     {
         try {
