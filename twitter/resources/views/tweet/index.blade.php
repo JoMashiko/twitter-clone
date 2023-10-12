@@ -40,6 +40,7 @@
                     {{-- リプライボタン(tiriger modal) --}}
                         <button type="button" class="reply-button btn btn-primary" data-bs-toggle="modal" data-bs-target="#{{ $tweet->id }}" style="background: transparent; border: none; margin-left: 8px">
                             <i class="fa-regular fa-comment" style="color: #202124;"></i>
+                            <span class="replyCount" style="color: #202124; margin-left: 5px;">{{ $tweet->replies->count() }}</span>
                         </button>
 
                         {{-- いいねボタン  --}}

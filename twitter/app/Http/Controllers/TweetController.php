@@ -79,7 +79,7 @@ class TweetController extends Controller
     }
 
     /**
-     * ツイートIDに基づいてツイートを検索し、詳細画面を表示する
+     * ツイートIDに基づいてツイートとリプライを検索し、詳細画面を表示する
      * 
      * @param int $tweetId
      * @return View
@@ -88,8 +88,9 @@ class TweetController extends Controller
     {
         try {
             $tweet = $this->tweetModel->findByTweetId($tweetId);
+            $replies = $tweet->getReplies();
 
-            return view('tweet.show', compact('tweet'));
+            return view('tweet.show', compact('tweet', 'replies'));
         } catch (Exception $e) {
             Log::error($e);
 
