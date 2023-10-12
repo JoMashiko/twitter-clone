@@ -25,14 +25,32 @@
                         {{ $tweet->user->display_name }}
                         <span class="text-muted">{{ '@' }}{{ $tweet->user->user_name }}</span>
                         <span class="text-muted">{{ '・' }}{{ $tweet->created_at->format('h:i A · M d, Y') }}</span>
+                        @can('update', $tweet)
+                        <div class="dropdown" style="display: inline-block; float: right;">
+                            <i class="fa-solid fa-ellipsis text-right" data-bs-toggle="dropdown" aria-expanded="false"></i>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="{{ route('tweet.edit', $tweet) }}">編集</a></li>
+                                <li>
+                                    <form method='post' action={{ route('tweet.delete', $tweet) }} onsubmit="return confirm('本当にツイートを削除してもよろしいですか?');">
+                                        @csrf
+                                        @method('delete')
+                                        <button type="submit" class=" dropdown-item btn btn-link text-danger">
+                                            {{ __('削除') }}
+                                        </button>
+                                    </form>
+                                </li>
+                            </ul>
+                        </div>
+                        @endcan
                     </h6>
                     <p class="card-text">
                         {{ $tweet->body }}
                     </p>
                     <div style="display: flex; align-items: center;">
-                        {{-- リプライボタン(tiriger modal) --}}
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" style="background: transparent; border: none;">
+                        {{-- リプライボタン --}}
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#reply-modal" style="background: transparent; border: none;">
                             <i class="fa-regular fa-comment" style="color: #202124;"></i>
+                            <span class="replyCount" style="color: #202124; margin-left: 5px;">{{ $tweet->replies->count() }}</span>
                         </button>
                         {{-- いいねボタン  --}}
                         <div style="margin-left: 20px">
@@ -51,42 +69,99 @@
                             @endif
                         </div>
                     </div>
-                    @can('update', $tweet)
-                    <div class="d-grid d-md-flex justify-content-md-end">
-                        <button type="button" class="btn btn-outline-dark me-md-2" onclick="location.href='{{ route('tweet.edit', $tweet) }}'">
-                            {{ __('編集') }}
-                        </button>
-                        <form method='post' action={{ route('tweet.delete', $tweet) }} onsubmit="
-                            return confirm('本当にツイートを削除してもよろしいですか？');">
-                                @csrf
-                                @method('delete')
-                                <button type="submit" class="btn btn-danger mx-2">
-                                    {{ __('削除') }}
-                                </button>
-                            </form>
-                        </div>
-                    @endcan
                 </div>
             </div>
-            {{-- Modal --}}
+            {{-- リプライフォーム --}}
             <form method="POST" action="{{ route('reply.store', $tweet->id) }}">
                 @csrf
-                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="mb-3">
+                    <textarea class="form-control @error('body') is-invalid @enderror" id="body" rows="3" type="text" name='body' value="{{ old('body') }}"></textarea>
+                    @error('body')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                        @enderror
+                </div>
+                <div class="d-grid justify-content-md-end mb-3">
+                    <button class="btn btn-outline-primary" type="submit">{{ __('返信') }}</button>
+                </div>
+            </form>
+            {{-- リプライ --}}
+            @foreach($replies as $reply)
+            <div class="card bg-white mb-3">
+                <div class="card-body">
+                    <h6 class="card-title">
+                        {{ $reply->user->display_name }}
+                        <span class="text-muted">{{ '@' }}{{ $reply->user->user_name }}</span>
+                        <span class="text-muted">{{ '・' }}{{ $reply->created_at->format('h:i A · M d, Y') }}</span>
+                        @can('update', $reply)
+                        <div class="dropdown" style="display: inline-block; float: right;">
+                            <i class="fa-solid fa-ellipsis text-right" data-bs-toggle="dropdown" aria-expanded="false"></i>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#edit-reply-modal-{{ $reply->id }}" href="#">編集</a>
+                                </li>
+                                <li>
+                                    <form method='post' action={{ route('reply.delete', $reply->id) }} onsubmit="return confirm('本当にリプライを削除してもよろしいですか?');">
+                                        @csrf
+                                        @method('delete')
+                                        <button type="submit" class=" dropdown-item btn btn-link text-danger">
+                                            {{ __('削除') }}
+                                        </button>
+                                    </form>
+                                </li>
+                            </ul>
+                        </div>
+                        @endcan
+                        {{-- リプライ編集のモーダル --}}
+                        <form method="POST" action="{{ route('reply.update', $reply->id) }}">
+                            @csrf
+                            <div class="modal fade" id="edit-reply-modal-{{ $reply->id }}" tabindex="-1" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                    <div class="modal-body">
+                                        <div class="mb-3">
+                                            <label for="message-text" class="col-form-label">リプライ</label>
+                                            <textarea class="form-control @error('body') is-invalid @enderror" id="body" rows="3" type="text" name='body'>{{ $reply->body }}</textarea>
+                                            @error('body')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button class="reply-button btn btn-outline-primary" name=submit-button>{{ __('返信') }}</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </h6>
+                    <p class="card-text" style="font-size: 15px">
+                        {{ $reply->body }}
+                    </p>
+                </div>
+            </div>
+            @endforeach
+            {{-- リプライのモーダル --}}
+            <form method="POST" action="{{ route('reply.store', $tweet->id) }}" name="reply">
+                @csrf
+                <div class="modal fade" id="reply-modal" tabindex="-1" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                         <div class="modal-body">
                             <div class="mb-3">
                                 <label for="message-text" class="col-form-label">リプライ</label>
-                                <textarea class="form-control @error('body') is-invalid @enderror" id="body" rows="3" type="text" name='body' value="{{ old('body') }}"></textarea>
-                                @error('body')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                            </div>
+                                    <textarea class="form-control @error('body') is-invalid @enderror" id="body" rows="3" type="text" name='body'>{{ old('body') }}</textarea>
+                                    @error('body')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button class="reply-button btn btn-outline-primary">{{ __('返信') }}</button>
+                            <button class="reply-button btn btn-outline-primary" name=submit-button>{{ __('返信') }}</button>
                         </div>
                     </div>
                 </div>

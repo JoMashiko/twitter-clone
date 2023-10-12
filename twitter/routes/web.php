@@ -75,6 +75,10 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/unfavorite', [FavoriteController::class, 'unfavorite'])->name('tweet.unfavorite');
         // リプライ保存
         Route::post('/{id}/store', [ReplyController::class, 'store'])->name('reply.store');
+        // リプライ更新
+        Route::post('/{id}/updateReply', [ReplyController::class, 'update'])->name('reply.update');
+        // リプライ削除
+        Route::delete('/{id}/deleteReply', [ReplyController::class, 'delete'])->name('reply.delete');
     });
 
     // ツイート一覧

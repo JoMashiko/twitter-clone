@@ -128,10 +128,20 @@ class Tweet extends Model
     /**
      * リレーション
      *
-     * @return void
+     * @return Hasmany
      */
-    public function replies()
+    public function replies(): Hasmany
     {
         return $this->hasMany(Reply::class);
+    }
+
+    /**
+     * リプライを取得する
+     *
+     * @return Collection
+     */
+    public function getReplies(): Collection
+    {
+        return $this->replies;
     }
 }

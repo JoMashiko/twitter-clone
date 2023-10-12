@@ -30,21 +30,57 @@ class Reply extends Model
         $this->save();
     }
 
-    public function updateReply(): void
+    /**
+     * リプライを更新する
+     *
+     * @param array $replyParam
+     * @param Reply $reply
+     * @return void
+     */
+    public function updateReply(array $replyParam, Reply $reply): void
     {
+        $reply->fill($replyParam);
+        $reply->update();
     }
 
+    /**
+     * リプライを削除する
+     *
+     * @return void
+     */
     public function deleteReply(): void
     {
+        $this->delete();
     }
 
+    /**
+     * リレーション
+     *
+     * @return void
+     */
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
+    /**
+     * リレーション
+     *
+     * @return void
+     */
     public function tweet()
     {
         return $this->belongsTo(Tweet::class);
+    }
+
+    /**
+     * リプライIDに基づいてリプライを検索し、一致するリプライを返す
+     * 
+     * @param int $replyId
+     * @return Reply
+     */
+    public function findByReplyId(int $replyId): Reply
+    {
+        return Reply::findOrFail($replyId);
     }
 }
