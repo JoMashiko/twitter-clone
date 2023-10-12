@@ -37,7 +37,7 @@
                     </p>
                 </a>
                 <div style="display: flex; align-items: center;">
-                    {{-- リプライボタン(tiriger modal) --}}
+                    {{-- リプライボタン --}}
                         <button type="button" class="reply-button btn btn-primary" data-bs-toggle="modal" data-bs-target="#{{ $tweet->id }}" style="background: transparent; border: none; margin-left: 8px">
                             <i class="fa-regular fa-comment" style="color: #202124;"></i>
                             <span class="replyCount" style="color: #202124; margin-left: 5px;">{{ $tweet->replies->count() }}</span>
@@ -61,7 +61,7 @@
                         </div>
                     </div>
                 </div>
-                {{-- Modal --}}
+                {{-- リプライのモーダル --}}
                 <form method="POST" action="{{ route('reply.store', $tweet->id) }}">
                     @csrf
                     <div class="modal fade" id="{{ $tweet->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

@@ -143,8 +143,8 @@ class TweetController extends Controller
     public function delete(int $tweetId): RedirectResponse
     {
         try {
-            $user = $this->tweetModel->findByTweetId($tweetId);
-            $user->deleteTweet();
+            $tweet = $this->tweetModel->findByTweetId($tweetId);
+            $tweet->deleteTweet();
 
             return redirect()->route('tweet.index')->with('success', 'ツイートを削除しました');
         } catch (Exception $e) {

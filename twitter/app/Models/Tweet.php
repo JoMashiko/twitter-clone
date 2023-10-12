@@ -73,7 +73,7 @@ class Tweet extends Model
     }
 
     /**
-     * ユーザーを削除する
+     * ツイートを削除する
      */
     public function deleteTweet(): void
     {
