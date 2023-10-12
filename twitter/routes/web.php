@@ -30,55 +30,59 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::group(['middleware' => 'auth'], function () {
 
     // マイページ
-    Route::prefix('user/{id}')->group(function () {
+    Route::group(['prefix' => 'user/{id}', 'as' => 'user.'], function () {
         // ユーザー詳細画面の表示
-        Route::get('/', [UserController::class, 'showUserInfo'])->name('user.show');
+        Route::get('/', [UserController::class, 'showUserInfo'])->name('show');
         // ユーザー編集画面の表示
-        Route::get('/edit', [UserController::class, 'edit'])->name('user.edit');
+        Route::get('/edit', [UserController::class, 'edit'])->name('edit');
         // ユーザー情報更新
-        Route::put('/update', [UserController::class, 'update'])->name('user.update');
+        Route::put('/update', [UserController::class, 'update'])->name('update');
         // ユーザー削除
-        Route::delete('/', [UserController::class, 'delete'])->name('user.delete');
+        Route::delete('/', [UserController::class, 'delete'])->name('delete');
     });
 
-    Route::prefix('users')->group(function () {
+    Route::group(['prefix' => 'users', 'as' => 'user.'], function () {
         // ユーザー一覧
-        Route::get('/', [UserController::class, 'getAllUsers'])->name('user.index');
+        Route::get('/', [UserController::class, 'getAllUsers'])->name('index');
         // フォロー
-        Route::post('/follow/{id}', [UserController::class, 'follow'])->name('user.follow');
+        Route::post('/follow/{id}', [UserController::class, 'follow'])->name('follow');
         // フォロー解除
-        Route::post('/unfollow/{id}', [UserController::class, 'unfollow'])->name('user.unfollow');
+        Route::post('/unfollow/{id}', [UserController::class, 'unfollow'])->name('unfollow');
         // フォロー一覧
-        Route::get('/followed', [UserController::class, 'showFollowedUsers'])->name('user.followed');
+        Route::get('/followed', [UserController::class, 'showFollowedUsers'])->name('followed');
         // フォロワー一覧
-        Route::get('/follower', [UserController::class, 'showFollowerUsers'])->name('user.follower');
+        Route::get('/follower', [UserController::class, 'showFollowerUsers'])->name('follower');
     });
 
 
     // ツイート
-    Route::prefix('tweet')->group(function () {
+    Route::group(['prefix' => 'tweet', 'as' => 'tweet.'], function () {
         // ツイート画面の表示
-        Route::get('/create', [TweetController::class, 'create'])->name('tweet.create');
+        Route::get('/create', [TweetController::class, 'create'])->name('create');
         // ツイート保存
-        Route::post('/store', [TweetController::class, 'store'])->name('tweet.store');
+        Route::post('/store', [TweetController::class, 'store'])->name('store');
         // ツイート詳細画面の表示
-        Route::get('/{id}', [TweetController::class, 'findByTweetId'])->name('tweet.show');
+        Route::get('/{id}', [TweetController::class, 'findByTweetId'])->name('show');
         //　ツイート編集画面の表示
-        Route::get('/{id}/edit', [TweetController::class, 'edit'])->name('tweet.edit');
+        Route::get('/{id}/edit', [TweetController::class, 'edit'])->name('edit');
         // ツイート内容更新
-        Route::put('/{id}/update', [TweetController::class, 'update'])->name('tweet.update');
+        Route::put('/{id}/update', [TweetController::class, 'update'])->name('update');
         // ツイート削除
-        Route::delete('/{id}/delete', [TweetController::class, 'delete'])->name('tweet.delete');
+        Route::delete('/{id}/delete', [TweetController::class, 'delete'])->name('delete');
         //　いいね
-        Route::post('/favorite', [FavoriteController::class, 'favorite'])->name('tweet.favorite');
+        Route::post('/favorite', [FavoriteController::class, 'favorite'])->name('favorite');
         // いいね解除
-        Route::post('/unfavorite', [FavoriteController::class, 'unfavorite'])->name('tweet.unfavorite');
+        Route::post('/unfavorite', [FavoriteController::class, 'unfavorite'])->name('unfavorite');
+    });
+
+    // リプライ
+    Route::group(['prefix' => 'tweet', 'as' => 'reply.'], function () {
         // リプライ保存
-        Route::post('/{id}/store', [ReplyController::class, 'store'])->name('reply.store');
+        Route::post('/{id}/store', [ReplyController::class, 'store'])->name('store');
         // リプライ更新
-        Route::post('/{id}/updateReply', [ReplyController::class, 'update'])->name('reply.update');
+        Route::post('/{id}/updateReply', [ReplyController::class, 'update'])->name('update');
         // リプライ削除
-        Route::delete('/{id}/deleteReply', [ReplyController::class, 'delete'])->name('reply.delete');
+        Route::delete('/{id}/deleteReply', [ReplyController::class, 'delete'])->name('delete');
     });
 
     // ツイート一覧
