@@ -50,14 +50,14 @@ class Tweet extends Model
     }
 
     /**
-     * ツイートIDに基づいてツイートを検索し、一致するツイートを返す
+     * ツイートIDに基づいてツイートとリプライを検索し、一致するツイートを返す
      * 
      * @param int $tweetId
      * @return Tweet $tweet
      */
-    public function findByTweetId(int $tweetId): Tweet
+    public function findTweetAndRepliesByTweetId(int $tweetId): Tweet
     {
-        return Tweet::findOrFail($tweetId);
+        return Tweet::with('replies')->findOrFail($tweetId);
     }
 
     /**
@@ -133,15 +133,5 @@ class Tweet extends Model
     public function replies(): Hasmany
     {
         return $this->hasMany(Reply::class);
-    }
-
-    /**
-     * リプライを取得する
-     *
-     * @return Collection
-     */
-    public function getReplies(): Collection
-    {
-        return $this->replies;
     }
 }

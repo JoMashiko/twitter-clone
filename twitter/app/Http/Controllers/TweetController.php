@@ -87,10 +87,9 @@ class TweetController extends Controller
     public function findByTweetId(int $tweetId)
     {
         try {
-            $tweet = $this->tweetModel->findByTweetId($tweetId);
-            $replies = $tweet->getReplies();
+            $tweet = $this->tweetModel->findTweetAndRepliesByTweetId($tweetId);
 
-            return view('tweet.show', compact('tweet', 'replies'));
+            return view('tweet.show', compact('tweet'));
         } catch (Exception $e) {
             Log::error($e);
 

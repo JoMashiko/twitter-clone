@@ -87,7 +87,7 @@
                 </div>
             </form>
             {{-- リプライ --}}
-            @foreach($replies as $reply)
+            @foreach($tweet->replies as $reply)
             <div class="card bg-white mb-3">
                 <div class="card-body">
                     <h6 class="card-title">

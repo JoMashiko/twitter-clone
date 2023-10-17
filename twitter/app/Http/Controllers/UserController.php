@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Http\Requests\User\UpdateRequest;
 use App\Models\Follower;
+use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Log;
 
 class UserController extends Controller
 {
@@ -29,13 +31,19 @@ class UserController extends Controller
      * @param int $userId ユーザーID
      * @return View
      */
-    public function showUserInfo(int $userId): View
+    public function showUserInfo(int $userId)
     {
-        $user = $this->userModel->findByUserId($userId);
-        $followedCount = $this->followerModel->countFollowedUsers($user);
-        $followerCount = $this->followerModel->countFollowerUsers($user);
+        try {
+            $user = $this->userModel->findByUserId($userId);
+            $followedCount = $this->followerModel->countFollowedUsers($user);
+            $followerCount = $this->followerModel->countFollowerUsers($user);
 
-        return view('user.show', compact('user', 'followedCount', 'followerCount'));
+            return view('user.show', compact('user', 'followedCount', 'followerCount'));
+        } catch (Exception $e) {
+            Log::error($e);
+
+            return redirect()->route('tweet.index')->with('message', 'エラーが発生しました');
+        }
     }
 
     /**
