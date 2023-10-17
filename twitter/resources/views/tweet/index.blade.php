@@ -47,13 +47,13 @@
                         <div style="margin-left: 20px">
                             @if($tweet->isFavorite($tweet->id, auth()->id()))
                             {{-- いいね済 --}}
-                            <button class="favorite-button" fav_val="1" style="background: transparent; border: none;" data-tweet-id={{ $tweet->id }}>
+                            <button class="favorite-button" fav_val="{{ config('const.fav_val.favorited') }}" style="background: transparent; border: none;" data-tweet-id={{ $tweet->id }}>
                                 <i class="fa-solid fa-heart" style="color: #f91880;"></i>
                                 <span class="favoriteCount" style="color: #f91880; margin-left: 5px;">{{ $tweet->favorites->count() }}</span>
                             </button>
                             @else
                             {{-- いいね未 --}}
-                            <button class="favorite-button" fav_val="0" style="background: transparent; border: none;" data-tweet-id={{ $tweet->id }}>
+                            <button class="favorite-button" fav_val="{{ config('const.fav_val.unfavorite') }}" style="background: transparent; border: none;" data-tweet-id={{ $tweet->id }}>
                                 <i class="fa-regular fa-heart" style="color: #202124;"></i>
                                 <span class="favoriteCount" style="color: #202124; margin-left: 5px;">{{ $tweet->favorites->count() }}</span>
                             </button>
