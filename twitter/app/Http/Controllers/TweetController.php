@@ -152,4 +152,17 @@ class TweetController extends Controller
             return redirect()->route('tweet.index')->with('message', 'ツイートを削除に失敗しました');
         }
     }
+
+    /**
+     * ログインユーザーがいいねしたツイート一覧を表示する
+     *
+     * @return View
+     */
+    public function getAllFavoriteTweets(): View
+    {
+        // ログインユーザーがいいねしたすべてのFavoriteレコードを取得
+        $favoriteTweets = Auth::user()->favorites;
+
+        return view('tweet.favorite', compact('favoriteTweets'));
+    }
 }
