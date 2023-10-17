@@ -87,4 +87,6 @@ Route::group(['middleware' => 'auth'], function () {
 
     // ツイート一覧
     Route::get('/tweets', [TweetController::class, 'getAllTweets'])->name('tweet.index');
+    //　いいねした投稿一覧
+    Route::get('/tweets/favorite', [TweetController::class, 'getAllFavoriteTweets'])->name('tweet.favorites');
 });
