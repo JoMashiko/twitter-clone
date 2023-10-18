@@ -10,10 +10,10 @@ $.ajaxSetup({
 });
 $(document).ready(function () {
   $('.favorite-button').on('click', function () {
-    var tweetId = $(this).data('tweet-id'); // クリックされたボタンのtweet-idを取得
-    var favoriteVal = $(this).attr("fav_val"); // クリックされたボタンのfav_val属性を取得
-    var clickedButton = $(this); // クリックされたボタンを変数に格納
-    var favoriteCountSpan = clickedButton.parent().find('.favoriteCount'); // 親要素内からfavoriteCount要素を取得
+    const tweetId = $(this).data('tweet-id'); // クリックされたボタンのtweet-idを取得
+    const favoriteVal = $(this).attr("fav_val"); // クリックされたボタンのfav_val属性を取得
+    const clickedButton = $(this); // クリックされたボタンを変数に格納
+    const favoriteCountSpan = clickedButton.parent().find('.favoriteCount'); // 親要素内からfavoriteCount要素を取得
 
     if (favoriteVal == '1') {
       unfavoriteTweet(tweetId, clickedButton, favoriteCountSpan);

@@ -86,15 +86,12 @@ class TweetController extends Controller
      */
     public function findByTweetId(int $tweetId)
     {
-        try {
-            $tweet = $this->tweetModel->findTweetAndRepliesByTweetId($tweetId);
-
-            return view('tweet.show', compact('tweet'));
-        } catch (Exception $e) {
-            Log::error($e);
-
-            return redirect()->route('tweet.index')->with('message', 'ツイートが見つかりませんでした');
+        $tweet = $this->tweetModel->findTweetAndRepliesByTweetId($tweetId);
+        if (!$tweet) {
+            abort(404);
         }
+
+        return view('tweet.show', compact('tweet'));
     }
 
     /**
@@ -143,6 +140,7 @@ class TweetController extends Controller
     {
         try {
             $tweet = $this->tweetModel->findByTweetId($tweetId);
+            $this->authorize('delete', $tweet);
             $tweet->deleteTweet();
 
             return redirect()->route('tweet.index')->with('success', 'ツイートを削除しました');

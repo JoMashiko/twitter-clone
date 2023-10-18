@@ -79,6 +79,7 @@ class ReplyController extends Controller
     {
         try {
             $reply = $this->reply->findByReplyId($replyId);
+            $this->authorize('delete', $reply);
             $reply->deleteReply();
 
             return back()->with('success', 'リプライを削除しました');
