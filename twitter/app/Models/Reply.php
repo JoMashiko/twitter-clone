@@ -22,11 +22,11 @@ class Reply extends Model
      * @param array $reply
      * @return void
      */
-    public function store(int $tweetId, int $userId, array $reply): void
+    public function store(int $tweetId, int $userId, array $replyParam): void
     {
         $this->tweet_id = $tweetId;
         $this->user_id = $userId;
-        $this->fill($reply);
+        $this->fill($replyParam);
         $this->save();
     }
 
@@ -37,10 +37,10 @@ class Reply extends Model
      * @param Reply $reply
      * @return void
      */
-    public function updateReply(array $replyParam, Reply $reply): void
+    public function updateReply(array $replyParam): void
     {
-        $reply->fill($replyParam);
-        $reply->update();
+        $this->fill($replyParam);
+        $this->update();
     }
 
     /**
