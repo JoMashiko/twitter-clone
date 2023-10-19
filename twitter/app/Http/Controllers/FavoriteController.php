@@ -37,7 +37,7 @@ class FavoriteController extends Controller
         $this->favoriteModel->favorite($tweetId, $userId);
 
         // いいねの数を取得
-        $tweet = $this->tweetModel->findByTweetId($tweetId);
+        $tweet = $this->tweetModel->findTweetAndRepliesByTweetId($tweetId);
         $favoriteCount = $tweet->favoriteCount();
 
         return response()->json(['favoriteCount' => $favoriteCount]);
@@ -60,7 +60,7 @@ class FavoriteController extends Controller
         }
 
         // いいねの数を取得
-        $tweet = $this->tweetModel->findByTweetId($tweetId);
+        $tweet = $this->tweetModel->findTweetAndRepliesByTweetId($tweetId);
         $favoriteCount = $tweet->favoriteCount();
 
         return response()->json(['favoriteCount' => $favoriteCount]);

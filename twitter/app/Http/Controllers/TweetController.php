@@ -102,7 +102,7 @@ class TweetController extends Controller
      */
     public function edit(int $tweetId): View
     {
-        $tweet = $this->tweetModel->findByTweetId($tweetId);
+        $tweet = $this->tweetModel->findTweetAndRepliesByTweetId($tweetId);
 
         return view('tweet.edit', compact('tweet'));
     }
@@ -118,7 +118,7 @@ class TweetController extends Controller
     {
         try {
             $tweetParam = $request->validated();
-            $tweet = $this->tweetModel->findByTweetId($tweetId);
+            $tweet = $this->tweetModel->findTweetAndRepliesByTweetId($tweetId);
             $this->authorize('update', $tweet);
             $tweet->updateTweet($tweetParam, $tweet);
 
@@ -139,7 +139,7 @@ class TweetController extends Controller
     public function delete(int $tweetId): RedirectResponse
     {
         try {
-            $tweet = $this->tweetModel->findByTweetId($tweetId);
+            $tweet = $this->tweetModel->findTweetAndRepliesByTweetId($tweetId);
             $this->authorize('delete', $tweet);
             $tweet->deleteTweet();
 
