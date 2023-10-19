@@ -34,8 +34,10 @@ class ReplyController extends Controller
     public function store(CreateReplyRequest $request, int $tweetId): RedirectResponse
     {
         try {
-            $userId = Auth::id();
-            $this->reply->store($tweetId, $userId, $request->validated());
+            $replyParam = $request->validated();
+            $replyParam['user_id'] = Auth::id();
+            $replyParam['tweet_id'] = $tweetId;
+            $this->reply->store($replyParam);
 
             return redirect()->route('tweet.show', $tweetId)->with('reply', '保存しました');
         } catch (Exception $e) {

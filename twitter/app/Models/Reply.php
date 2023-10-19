@@ -22,10 +22,8 @@ class Reply extends Model
      * @param array $reply
      * @return void
      */
-    public function store(int $tweetId, int $userId, array $replyParam): void
+    public function store(array $replyParam): void
     {
-        $this->tweet_id = $tweetId;
-        $this->user_id = $userId;
         $this->fill($replyParam);
         $this->save();
     }
