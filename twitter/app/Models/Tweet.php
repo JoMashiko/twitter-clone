@@ -50,14 +50,14 @@ class Tweet extends Model
     }
 
     /**
-     * ツイートIDに基づいてツイートを検索し、一致するツイートを返す
+     * ツイートIDに基づいてツイートとリプライを検索し、一致するツイートを返す
      * 
      * @param int $tweetId
      * @return Tweet $tweet
      */
-    public function findByTweetId(int $tweetId): Tweet
+    public function findTweetAndRepliesByTweetId(int $tweetId): Tweet
     {
-        return Tweet::findOrFail($tweetId);
+        return Tweet::with('replies')->findOrFail($tweetId);
     }
 
     /**
@@ -73,7 +73,7 @@ class Tweet extends Model
     }
 
     /**
-     * ユーザーを削除する
+     * ツイートを削除する
      */
     public function deleteTweet(): void
     {
@@ -123,5 +123,15 @@ class Tweet extends Model
     public function searchByQuery(string $query): Collection
     {
         return Tweet::where('body', 'LIKE', '%' . $query . '%')->get();
+    }
+
+    /**
+     * リレーション
+     *
+     * @return Hasmany
+     */
+    public function replies(): Hasmany
+    {
+        return $this->hasMany(Reply::class);
     }
 }

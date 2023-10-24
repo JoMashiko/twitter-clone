@@ -79,22 +79,19 @@ class TweetController extends Controller
     }
 
     /**
-     * ツイートIDに基づいてツイートを検索し、詳細画面を表示する
+     * ツイートIDに基づいてツイートとリプライを検索し、詳細画面を表示する
      * 
      * @param int $tweetId
      * @return View
      */
     public function findByTweetId(int $tweetId)
     {
-        try {
-            $tweet = $this->tweetModel->findByTweetId($tweetId);
-
-            return view('tweet.show', compact('tweet'));
-        } catch (Exception $e) {
-            Log::error($e);
-
-            return redirect()->route('tweet.index')->with('message', 'ツイートが見つかりませんでした');
+        $tweet = $this->tweetModel->findTweetAndRepliesByTweetId($tweetId);
+        if (!$tweet) {
+            abort(404);
         }
+
+        return view('tweet.show', compact('tweet'));
     }
 
     /**
@@ -105,7 +102,7 @@ class TweetController extends Controller
      */
     public function edit(int $tweetId): View
     {
-        $tweet = $this->tweetModel->findByTweetId($tweetId);
+        $tweet = $this->tweetModel->findTweetAndRepliesByTweetId($tweetId);
 
         return view('tweet.edit', compact('tweet'));
     }
@@ -121,7 +118,7 @@ class TweetController extends Controller
     {
         try {
             $tweetParam = $request->validated();
-            $tweet = $this->tweetModel->findByTweetId($tweetId);
+            $tweet = $this->tweetModel->findTweetAndRepliesByTweetId($tweetId);
             $this->authorize('update', $tweet);
             $tweet->updateTweet($tweetParam, $tweet);
 
@@ -142,8 +139,9 @@ class TweetController extends Controller
     public function delete(int $tweetId): RedirectResponse
     {
         try {
-            $user = $this->tweetModel->findByTweetId($tweetId);
-            $user->deleteTweet();
+            $tweet = $this->tweetModel->findTweetAndRepliesByTweetId($tweetId);
+            $this->authorize('delete', $tweet);
+            $tweet->deleteTweet();
 
             return redirect()->route('tweet.index')->with('success', 'ツイートを削除しました');
         } catch (Exception $e) {

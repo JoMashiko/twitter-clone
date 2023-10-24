@@ -137,6 +137,16 @@ class User extends Authenticatable
     /**
      * リレーション
      *
+     * @return void
+     */
+    public function replies()
+    {
+        return $this->hasMany(Reply::class);
+    }
+
+    /**
+     * リレーション
+     *
      * @return HasMany
      */
     public function favorites(): HasMany
