@@ -49,20 +49,19 @@ class TweetController extends Controller
             $userId = Auth::id();
             $tweetParam = $request->validated();
             $this->tweetModel->store($tweetParam, $userId);
+            $tweetId = $this->tweetModel->id;
 
-            // ディレクトリ名
-            $dir = 'images';
-            // アップロードされたファイル名を取得
             $uploadedFile = $request->file('image');
 
             if (isset($uploadedFile)) {
-                // ファイル名を取得して保存
+                $dirName = 'images';
                 $fileName = $uploadedFile->getClientOriginalName();
-                $uploadedFile->storeAs('public/' . $dir, $fileName);
-                $tweetId = $this->tweetModel->id;
-                $image_path = 'storage/' . $dir . '/' . $fileName;
-                $this->imageModel->store($tweetId, $image_path);
+                $imagePath = 'storage/' . $dirName . '/' . $fileName;
+
+                $this->imageModel->saveImage($uploadedFile, $dirName, $fileName);
+                $this->imageModel->store($tweetId, $imagePath);
             }
+
             return redirect()->route('tweet.index')->with('success', 'ツイートが保存されました');
         } catch (Exception $e) {
             Log::error($e);
