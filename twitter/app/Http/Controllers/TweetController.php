@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Tweet\CreateTweetRequest;
 use App\Http\Requests\Tweet\UpdateRequest;
+use App\Models\Image;
 use App\Models\Tweet;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -18,10 +19,12 @@ class TweetController extends Controller
      * コンストラクタ
      */
     private $tweetModel;
+    private $imageModel;
 
-    public function __construct(Tweet $tweetModel)
+    public function __construct(Tweet $tweetModel, Image $imageModel)
     {
         $this->tweetModel = $tweetModel;
+        $this->imageModel = $imageModel;
     }
 
     /**
@@ -47,6 +50,19 @@ class TweetController extends Controller
             $tweetParam = $request->validated();
             $this->tweetModel->store($tweetParam, $userId);
 
+            // ディレクトリ名
+            $dir = 'images';
+            // アップロードされたファイル名を取得
+            $uploadedFile = $request->file('image');
+
+            if (isset($uploadedFile)) {
+                // ファイル名を取得して保存
+                $fileName = $uploadedFile->getClientOriginalName();
+                $uploadedFile->storeAs('public/' . $dir, $fileName);
+                $tweetId = $this->tweetModel->id;
+                $image_path = 'storage/' . $dir . '/' . $fileName;
+                $this->imageModel->store($tweetId, $image_path);
+            }
             return redirect()->route('tweet.index')->with('success', 'ツイートが保存されました');
         } catch (Exception $e) {
             Log::error($e);
