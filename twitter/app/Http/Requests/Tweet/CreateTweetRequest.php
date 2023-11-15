@@ -24,7 +24,17 @@ class CreateTweetRequest extends FormRequest
     public function rules()
     {
         return [
-            'body' => 'required|string|max:140'
+            'body' => 'required|string|max:140',
+            'image' => 'image|mimes:jpeg,png,gif',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            "body.max" => "ツイートは140文字以下にしてください。",
+            "image.image" => "指定されたファイルが画像ではありません。",
+            "image.mines" => "指定された拡張子（PNG/JPG/GIF）ではありません。",
         ];
     }
 }

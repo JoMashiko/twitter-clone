@@ -21,7 +21,13 @@
                              @enderror
                         </div>
 
-                        <input type="file" name="image">
+                        <input type="file" class="@error('image') is-invalid @enderror" name="image" value="{{ old('image') }}">
+
+                        @error('image')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
                         
                         <div class="d-grid justify-content-md-end">
                             <button class="btn btn-primary" type="submit">{{ __('投稿') }}</button>
