@@ -34,7 +34,7 @@ class Image extends Model
      * @param string $image_path
      * @return void
      */
-    public function store(int $tweetId, string $imagePath): void
+    public function saveImagePath(int $tweetId, string $imagePath): void
     {
         $this->tweet_id = $tweetId;
         $this->image_path = $imagePath;

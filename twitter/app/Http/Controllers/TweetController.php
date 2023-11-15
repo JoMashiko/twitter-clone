@@ -59,7 +59,7 @@ class TweetController extends Controller
                 $imagePath = 'storage/' . $dirName . '/' . $fileName;
 
                 $this->imageModel->saveImage($uploadedFile, $dirName, $fileName);
-                $this->imageModel->store($tweetId, $imagePath);
+                $this->imageModel->saveImagePath($tweetId, $imagePath);
             }
 
             return redirect()->route('tweet.index')->with('success', 'ツイートが保存されました');
