@@ -15,6 +15,23 @@ class Image extends Model
     protected $fillable = ['tweet_id', 'user_id', 'image_path'];
 
     /**
+     * 画像のパスを作成して画像とパスを保存する
+     *
+     * @param UploadedFile $uploadedFile
+     * @param integer $tweetId
+     * @return void
+     */
+    public function processAndSaveImage(UploadedFile $uploadedFile, int $tweetId)
+    {
+        $dirName = 'images';
+        $fileName = $uploadedFile->getClientOriginalName();
+        $imagePath = 'storage/' . $dirName . '/' . $fileName;
+
+        $this->saveImage($uploadedFile, $dirName, $fileName);
+        $this->saveImagePath($tweetId, $imagePath);
+    }
+
+    /**
      * 画像を保存する
      *
      * @param UploadedFile $uploadedFile

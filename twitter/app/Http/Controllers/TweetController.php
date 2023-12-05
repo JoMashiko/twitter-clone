@@ -54,12 +54,7 @@ class TweetController extends Controller
             $uploadedFile = $request->file('image');
 
             if (isset($uploadedFile)) {
-                $dirName = 'images';
-                $fileName = $uploadedFile->getClientOriginalName();
-                $imagePath = 'storage/' . $dirName . '/' . $fileName;
-
-                $this->imageModel->saveImage($uploadedFile, $dirName, $fileName);
-                $this->imageModel->saveImagePath($tweetId, $imagePath);
+                $this->imageModel->processAndSaveImage($uploadedFile, $tweetId);
             }
 
             return redirect()->route('tweet.index')->with('success', 'ツイートが保存されました');
