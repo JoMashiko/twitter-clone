@@ -12,17 +12,14 @@
 
                         @csrf
                         @method('put')
-
                         <div class="mb-3">
                             <textarea class="form-control @error('body') is-invalid @enderror" id="body" rows="3" type="text" name='body' value="{{ old('body') ?? $tweet->body }}" required autofocus></textarea>
-                            
                             @error('body')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
-                             @enderror
+                            @enderror
                         </div>
-
                         <div class="d-grid justify-content-md-end">
                             <button class="btn btn-primary" type="submit">{{ __('保存') }}</button>
                         </div>
