@@ -46,6 +46,11 @@
                     <p class="card-text">
                         {{ $tweet->body }}
                     </p>
+                    <p>
+                        @foreach ($tweet->images as $image)
+                            <img src="{{ asset($image->image_path) }}" alt="Image">
+                        @endforeach
+                    </p>
                     <div style="display: flex; align-items: center;">
                         {{-- リプライボタン --}}
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#reply-modal" style="background: transparent; border: none;">

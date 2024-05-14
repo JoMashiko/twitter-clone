@@ -17,9 +17,7 @@ class Reply extends Model
     /**
      * リプライを保存する
      *
-     * @param int $tweetId
-     * @param integer $userId
-     * @param array $reply
+     * @param array $replyParam
      * @return void
      */
     public function store(array $replyParam): void

@@ -8,7 +8,7 @@
                 <div class="card-header">{{ __('ツイート') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('tweet.store') }}">
+                    <form method="POST" action="{{ route('tweet.store') }}" enctype="multipart/form-data">
                         @csrf
 
                         <div class="mb-3">
@@ -21,6 +21,14 @@
                              @enderror
                         </div>
 
+                        <input type="file" class="@error('image') is-invalid @enderror" name="image" value="{{ old('image') }}">
+
+                        @error('image')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                        
                         <div class="d-grid justify-content-md-end">
                             <button class="btn btn-primary" type="submit">{{ __('投稿') }}</button>
                         </div>

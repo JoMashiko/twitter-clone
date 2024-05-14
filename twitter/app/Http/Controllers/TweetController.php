@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Tweet\CreateTweetRequest;
 use App\Http\Requests\Tweet\UpdateRequest;
+use App\Models\Image;
 use App\Models\Tweet;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -18,10 +19,12 @@ class TweetController extends Controller
      * コンストラクタ
      */
     private $tweetModel;
+    private $imageModel;
 
-    public function __construct(Tweet $tweetModel)
+    public function __construct(Tweet $tweetModel, Image $imageModel)
     {
         $this->tweetModel = $tweetModel;
+        $this->imageModel = $imageModel;
     }
 
     /**
@@ -46,6 +49,13 @@ class TweetController extends Controller
             $userId = Auth::id();
             $tweetParam = $request->validated();
             $this->tweetModel->store($tweetParam, $userId);
+            $tweetId = $this->tweetModel->id;
+
+            $uploadedFile = $request->file('image');
+
+            if (isset($uploadedFile)) {
+                $this->imageModel->processAndSaveImage($uploadedFile, $tweetId);
+            }
 
             return redirect()->route('tweet.index')->with('success', 'ツイートが保存されました');
         } catch (Exception $e) {
@@ -84,7 +94,7 @@ class TweetController extends Controller
      * @param int $tweetId
      * @return View
      */
-    public function findByTweetId(int $tweetId)
+    public function findByTweetId(int $tweetId): View
     {
         $tweet = $this->tweetModel->findTweetAndRepliesByTweetId($tweetId);
         if (!$tweet) {

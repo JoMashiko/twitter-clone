@@ -134,4 +134,14 @@ class Tweet extends Model
     {
         return $this->hasMany(Reply::class);
     }
+
+    /**
+     * リレーション
+     *
+     * @return void
+     */
+    public function images()
+    {
+        return $this->hasMany(Image::class);
+    }
 }
