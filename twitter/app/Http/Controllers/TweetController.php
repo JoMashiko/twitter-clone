@@ -94,7 +94,7 @@ class TweetController extends Controller
      * @param int $tweetId
      * @return View
      */
-    public function findByTweetId(int $tweetId)
+    public function findByTweetId(int $tweetId): View
     {
         $tweet = $this->tweetModel->findTweetAndRepliesByTweetId($tweetId);
         if (!$tweet) {
